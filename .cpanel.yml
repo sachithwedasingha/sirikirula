@@ -1,12 +1,7 @@
 ---
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/siringtu/public_html/
-
-    # Copy root PHP files
-    - /bin/find . -maxdepth 1 -name "*.php" -exec /bin/cp {} $DEPLOYPATH \;
-
-    # Copy project folders
+    - export DEPLOYPATH=/home/siringtu/public_html
     - /bin/cp -R assets $DEPLOYPATH
     - /bin/cp -R config $DEPLOYPATH
     - /bin/cp -R css $DEPLOYPATH
