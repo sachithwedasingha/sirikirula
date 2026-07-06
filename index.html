@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Siri Kirula – Fine Jewellery | Sell & Rent</title>
+  <meta name="description" content="Siri Kirula – Premium jewellery for sale and rent. Explore our exclusive collection of gold, diamond, and gemstone jewellery."/>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💎</text></svg>"/>
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet"/>
+  <!-- Custom CSS -->
+  <link href="css/style2.css" rel="stylesheet"/>
+  <style>
+    h1,h2,h3,h4,h5,.brand-name,.section-title,.hero-title,.cta-title,.product-name {
+      font-family: 'Playfair Display', Georgia, serif !important;
+    }
+    /* Marquee */
+    .marquee-wrap {
+      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      padding: 10px 0; overflow: hidden;
+      border-bottom: 2px solid var(--maroon);
+    }
+    .marquee-track {
+      display: flex; gap: 60px; width: max-content;
+      animation: marquee 25s linear infinite;
+    }
+    .marquee-track:hover { animation-play-state: paused; }
+    @keyframes marquee { from { transform:translateX(0); } to { transform:translateX(-50%); } }
+    .marquee-item { font-size:0.8rem; font-weight:700; color:var(--maroon-dark); letter-spacing:2px; white-space:nowrap; display:flex; align-items:center; gap:8px; }
+    /* Category Cards */
+    .cat-card {
+      border-radius: 16px; overflow: hidden; position: relative;
+      height: 260px; cursor: pointer; flex: 1; min-width: 160px;
+    }
+    .cat-card img { width:100%; height:100%; object-fit:cover; transition:transform 0.5s; }
+    .cat-card:hover img { transform:scale(1.1); }
+    .cat-card-overlay {
+      position:absolute; inset:0;
+      background:linear-gradient(to top, rgba(90,0,0,0.85) 0%, rgba(90,0,0,0.1) 60%);
+      display:flex; flex-direction:column; justify-content:flex-end; padding:1.2rem;
+    }
+    .cat-card-name { font-size:1.05rem; font-weight:700; color:var(--gold-light); font-family:'Playfair Display',serif; }
+    .cat-card-count { font-size:0.75rem; color:rgba(255,215,0,0.7); }
+    .cat-card-btn {
+      margin-top:8px; background:rgba(212,160,23,0.15);
+      border:1px solid var(--gold); color:var(--gold-light);
+      font-size:0.72rem; padding:4px 14px; border-radius:20px;
+      display:inline-block; transition:all 0.3s; text-decoration:none;
+    }
+    .cat-card-btn:hover { background:var(--gold); color:var(--maroon-dark); }
+    /* Why Us */
+    .why-card {
+      background:var(--white); border-radius:16px;
+      padding:2rem 1.5rem; text-align:center;
+      border-bottom:4px solid transparent;
+      transition:all 0.4s; box-shadow:0 4px 15px var(--shadow);
+    }
+    .why-card:hover { border-color:var(--gold); transform:translateY(-6px); }
+    .why-num {
+      font-size:3rem; font-weight:700; color:rgba(212,160,23,0.15);
+      font-family:'Playfair Display',serif; line-height:1; margin-bottom:0.5rem;
+    }
+    /* Promo Banner */
+    .promo-band {
+      background:linear-gradient(90deg, var(--maroon-dark), var(--maroon), var(--maroon-dark));
+      border-top:2px solid var(--gold); border-bottom:2px solid var(--gold);
+      padding:20px 0;
+    }
+    /* Rent Highlight */
+    .rent-highlight {
+      background: linear-gradient(135deg, var(--gold-pale) 0%, #fff 50%, var(--gold-pale) 100%);
+      border:2px solid rgba(212,160,23,0.3); border-radius:20px;
+      padding:3rem 2rem; position:relative; overflow:hidden;
+    }
+    .rent-highlight::before {
+      content:'';
+      position:absolute; top:-40px; right:-40px;
+      width:180px; height:180px;
+      background:radial-gradient(circle, rgba(212,160,23,0.15) 0%, transparent 70%);
+      border-radius:50%;
+    }
+  </style>
+</head>
+<body>
+
+<!-- PRELOADER -->
+<div id="preloader">
+  <div class="gem-spin"></div>
+  <p>Siri Kirula</p>
+</div>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track" id="marqueeTrack">
+    <span class="marquee-item"><i class="fas fa-gem"></i> FREE SHIPPING ON ORDERS ABOVE ₹5,000</span>
+    <span class="marquee-item"><i class="fas fa-star"></i> 100% CERTIFIED HALLMARK GOLD</span>
+    <span class="marquee-item"><i class="fas fa-crown"></i> EXCLUSIVE BRIDAL COLLECTION NOW AVAILABLE</span>
+    <span class="marquee-item"><i class="fas fa-ring"></i> RENT JEWELLERY FOR JUST ₹299/DAY</span>
+    <span class="marquee-item"><i class="fas fa-shield-alt"></i> BIS CERTIFIED JEWELLERY</span>
+    <span class="marquee-item"><i class="fas fa-gem"></i> FREE SHIPPING ON ORDERS ABOVE ₹5,000</span>
+    <span class="marquee-item"><i class="fas fa-star"></i> 100% CERTIFIED HALLMARK GOLD</span>
+    <span class="marquee-item"><i class="fas fa-crown"></i> EXCLUSIVE BRIDAL COLLECTION NOW AVAILABLE</span>
+    <span class="marquee-item"><i class="fas fa-ring"></i> RENT JEWELLERY FOR JUST ₹299/DAY</span>
+    <span class="marquee-item"><i class="fas fa-shield-alt"></i> BIS CERTIFIED JEWELLERY</span>
+  </div>
+</div>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-custom">
+  <div class="container">
+    <a class="navbar-brand p-0" href="index.html">
+      <div class="navbar-brand-box">
+        <img class="brand-gem" src="assets/logo.png">
+        <div class="brand-text">
+          <div class="brand-name">Siri Kirula</div>
+          <div class="brand-tagline">Fine Jewellery Since 1998</div>
+        </div>
+      </div>
+    </a>
+    <button class="navbar-toggler navbar-toggler-custom border-0 bg-transparent" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+      <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navMenu">
+      <ul class="navbar-nav ms-auto align-items-center gap-1">
+        <li class="nav-item"><a class="nav-link-custom active" href="index.html">Home</a></li>
+        <li class="nav-item"><a class="nav-link-custom" href="shop.html">Buy Jewellery</a></li>
+        <li class="nav-item"><a class="nav-link-custom" href="rent.html">Rent Jewellery</a></li>
+        <li class="nav-item"><a class="nav-link-custom" href="gallery.html">Gallery</a></li>
+        <li class="nav-item"><a class="nav-link-custom" href="contact.html">Contact</a></li>
+        <li class="nav-item ms-2"><a class="nav-link-custom nav-cta" href="shop.html"><i class="fas fa-shopping-bag me-1"></i>Shop Now</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero-section">
+  <div class="hero-particles"></div>
+  <div class="container">
+    <div class="hero-content">
+      <div class="hero-badge fade-in-up"><i class="fas fa-crown me-2"></i>Sri Lanka's Most Trusted Jewellery Store</div>
+      <h1 class="hero-title fade-in-up" data-delay="100">
+        Elegance That<br><span>Defines You</span>
+      </h1>
+      <p class="hero-subtitle fade-in-up" data-delay="200">
+        Discover our exquisite collection of handcrafted gold, diamond & gemstone jewellery.
+        Buy to own or rent for your special occasions.
+      </p>
+      <div class="hero-btns fade-in-up" data-delay="300">
+        <a href="shop.html" class="btn-gold"><i class="fas fa-gem me-2"></i>Explore Collection</a>
+        <a href="rent.html" class="btn-outline-gold"><i class="fas fa-calendar-alt me-2"></i>Rent Jewellery</a>
+      </div>
+      <div class="hero-stats fade-in-up" data-delay="400">
+        <div class="stat-item">
+          <div class="stat-num" data-target="5000" data-suffix="+">5000+</div>
+          <div class="stat-label">Happy Customers</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num" data-target="1200" data-suffix="+">1200+</div>
+          <div class="stat-label">Jewellery Pieces</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num" data-target="25" data-suffix="yrs">25yrs</div>
+          <div class="stat-label">Of Excellence</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num" data-target="100" data-suffix="%">100%</div>
+          <div class="stat-label">Certified Gold</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CATEGORIES -->
+<section class="section-cream py-5">
+  <div class="container">
+    <div class="section-header fade-in-up">
+      <span class="section-tag">Browse By Category</span>
+      <h2 class="section-title">Shop Our <span>Collections</span></h2>
+      <div class="section-divider"><div class="line"></div><div class="diamond"></div><div class="line right"></div></div>
+      <p class="section-desc">From bridal sets to everyday wear — find jewellery for every occasion and budget.</p>
+    </div>
+    <div class="d-flex gap-3 flex-wrap justify-content-center">
+      <div class="cat-card fade-in-up" data-delay="0">
+        <img src="https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=400&q=80" alt="Necklaces"/>
+        <div class="cat-card-overlay">
+          <div class="cat-card-name">Necklaces</div>
+          <div class="cat-card-count">240+ designs</div>
+          <a href="shop.html" class="cat-card-btn">View All →</a>
+        </div>
+      </div>
+      <div class="cat-card fade-in-up" data-delay="100">
+        <img src="https://images.unsplash.com/photo-1603561596112-0a132b757442?w=400&q=80" alt="Earrings"/>
+        <div class="cat-card-overlay">
+          <div class="cat-card-name">Earrings</div>
+          <div class="cat-card-count">310+ designs</div>
+          <a href="shop.html" class="cat-card-btn">View All →</a>
+        </div>
+      </div>
+      <div class="cat-card fade-in-up" data-delay="200">
+        <img src="https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=400&q=80" alt="Rings"/>
+        <div class="cat-card-overlay">
+          <div class="cat-card-name">Rings</div>
+          <div class="cat-card-count">180+ designs</div>
+          <a href="shop.html" class="cat-card-btn">View All →</a>
+        </div>
+      </div>
+      <div class="cat-card fade-in-up" data-delay="300">
+        <img src="https://images.unsplash.com/photo-1602173574767-37ac01994b2a?w=400&q=80" alt="Bangles"/>
+        <div class="cat-card-overlay">
+          <div class="cat-card-name">Bangles</div>
+          <div class="cat-card-count">150+ designs</div>
+          <a href="shop.html" class="cat-card-btn">View All →</a>
+        </div>
+      </div>
+      <div class="cat-card fade-in-up" data-delay="400">
+        <img src="https://images.unsplash.com/photo-1617038260897-41a1f14a8ca0?w=400&q=80" alt="Bridal Sets"/>
+        <div class="cat-card-overlay">
+          <div class="cat-card-name">Bridal Sets</div>
+          <div class="cat-card-count">90+ sets</div>
+          <a href="shop.html" class="cat-card-btn">View All →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROMO BAND -->
+<div class="promo-band">
+  <div class="container">
+    <div class="row align-items-center text-center text-md-start gy-2">
+      <div class="col-md-3">
+        <div class="d-flex align-items-center justify-content-center justify-content-md-start gap-2">
+          <i class="fas fa-truck fa-lg text-warning"></i>
+          <div><div class="text-white fw-bold" style="font-size:.85rem;">Free Shipping</div><div style="font-size:.75rem;color:rgba(255,255,255,.6);">Orders above ₹5,000</div></div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="d-flex align-items-center justify-content-center justify-content-md-start gap-2">
+          <i class="fas fa-undo fa-lg text-warning"></i>
+          <div><div class="text-white fw-bold" style="font-size:.85rem;">Easy Returns</div><div style="font-size:.75rem;color:rgba(255,255,255,.6);">7-day hassle free</div></div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="d-flex align-items-center justify-content-center justify-content-md-start gap-2">
+          <i class="fas fa-certificate fa-lg text-warning"></i>
+          <div><div class="text-white fw-bold" style="font-size:.85rem;">BIS Certified</div><div style="font-size:.75rem;color:rgba(255,255,255,.6);">Hallmark guarantee</div></div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="d-flex align-items-center justify-content-center justify-content-md-start gap-2">
+          <i class="fas fa-headset fa-lg text-warning"></i>
+          <div><div class="text-white fw-bold" style="font-size:.85rem;">24/7 Support</div><div style="font-size:.75rem;color:rgba(255,255,255,.6);">Always here for you</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FEATURED PRODUCTS -->
+<section class="section-white py-5">
+  <div class="container">
+    <div class="section-header fade-in-up">
+      <span class="section-tag">Best Sellers</span>
+      <h2 class="section-title">Featured <span>Jewellery</span></h2>
+      <div class="section-divider"><div class="line"></div><div class="diamond"></div><div class="line right"></div></div>
+    </div>
+    <div class="row g-4">
+      <!-- Product 1 -->
+      <div class="col-lg-3 col-md-6 fade-in-up" data-delay="0">
+        <div class="product-card">
+          <div class="product-img-wrap">
+            <img src="https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=500&q=80" alt="Gold Necklace"/>
+            <div class="product-badge">Best Seller</div>
+            <div class="product-overlay">
+              <button class="overlay-btn btn-quickview" title="Quick View"><i class="fas fa-eye"></i></button>
+              <button class="overlay-btn btn-wishlist" title="Wishlist"><i class="far fa-heart"></i></button>
+              <button class="overlay-btn btn-addcart" title="Add to Cart"><i class="fas fa-shopping-bag"></i></button>
+            </div>
+          </div>
+          <div class="product-body">
+            <div class="product-category">Gold Necklace</div>
+            <div class="product-name">Royal Kundan Haar Set</div>
+            <div class="product-desc">22K gold kundan necklace with pearl drops, perfect for bridal occasions.</div>
+            <div class="product-footer">
+              <div><span class="price"><span class="currency">₹</span>45,999</span><span class="price-old">₹52,000</span></div>
+              <div class="rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i><span>(128)</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Product 2 -->
+      <div class="col-lg-3 col-md-6 fade-in-up" data-delay="100">
+        <div class="product-card">
+          <div class="product-img-wrap">
+            <img src="https://images.unsplash.com/photo-1603561596112-0a132b757442?w=500&q=80" alt="Diamond Earrings"/>
+            <div class="product-badge new">New Arrival</div>
+            <div class="product-overlay">
+              <button class="overlay-btn btn-quickview" title="Quick View"><i class="fas fa-eye"></i></button>
+              <button class="overlay-btn btn-wishlist" title="Wishlist"><i class="far fa-heart"></i></button>
+              <button class="overlay-btn btn-addcart" title="Add to Cart"><i class="fas fa-shopping-bag"></i></button>
+            </div>
+          </div>
+          <div class="product-body">
+            <div class="product-category">Diamond Earrings</div>
+            <div class="product-name">Starlight Jhumka</div>
+            <div class="product-desc">Brilliant cut diamond earrings set in 18K white gold. IGI certified.</div>
+            <div class="product-footer">
+              <div><span class="price"><span class="currency">₹</span>28,500</span></div>
+              <div class="rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><span>(94)</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Product 3 -->
+      <div class="col-lg-3 col-md-6 fade-in-up" data-delay="200">
+        <div class="product-card">
+          <div class="product-img-wrap">
+            <img src="https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=500&q=80" alt="Gold Ring"/>
+            <div class="product-badge rent">Available to Rent</div>
+            <div class="product-overlay">
+              <button class="overlay-btn btn-quickview" title="Quick View"><i class="fas fa-eye"></i></button>
+              <button class="overlay-btn btn-wishlist" title="Wishlist"><i class="far fa-heart"></i></button>
+              <button class="overlay-btn btn-addcart" title="Add to Cart"><i class="fas fa-shopping-bag"></i></button>
+            </div>
+          </div>
+          <div class="product-body">
+            <div class="product-category">Gemstone Ring</div>
+            <div class="product-name">Emerald Royale Ring</div>
+            <div class="product-desc">Natural emerald solitaire ring in 22K gold, ideal for engagements.</div>
+            <div class="product-footer">
+              <div>
+                <span class="price"><span class="currency">₹</span>38,000</span>
+                <div class="rent-price"><i class="fas fa-calendar-alt me-1"></i>Rent: ₹599/day</div>
+              </div>
+              <div class="rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i><span>(57)</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Product 4 -->
+      <div class="col-lg-3 col-md-6 fade-in-up" data-delay="300">
+        <div class="product-card">
+          <div class="product-img-wrap">
+            <img src="https://images.unsplash.com/photo-1602173574767-37ac01994b2a?w=500&q=80" alt="Gold Bangles"/>
+            <div class="product-badge">Best Seller</div>
+            <div class="product-overlay">
+              <button class="overlay-btn btn-quickview" title="Quick View"><i class="fas fa-eye"></i></button>
+              <button class="overlay-btn btn-wishlist" title="Wishlist"><i class="far fa-heart"></i></button>
+              <button class="overlay-btn btn-addcart" title="Add to Cart"><i class="fas fa-shopping-bag"></i></button>
+            </div>
+          </div>
+          <div class="product-body">
+            <div class="product-category">Gold Bangles</div>
+            <div class="product-name">Antique Kangan Set</div>
+            <div class="product-desc">Traditional meenakari bangles in 22K gold – set of 6 pieces.</div>
+            <div class="product-footer">
+              <div><span class="price"><span class="currency">₹</span>62,000</span><span class="price-old">₹70,000</span></div>
+              <div class="rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><span>(203)</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="text-center mt-4 fade-in-up">
+      <a href="shop.html" class="btn-maroon"><i class="fas fa-th-large me-2"></i>View All Jewellery</a>
+    </div>
+  </div>
+</section>
+
+<!-- RENT HIGHLIGHT -->
+<section class="section-cream py-5">
+  <div class="container">
+    <div class="row align-items-center g-5">
+      <div class="col-lg-6 fade-in-left">
+        <img src="https://images.unsplash.com/photo-1617038260897-41a1f14a8ca0?w=700&q=80"
+             alt="Rent Jewellery" class="img-fluid rounded-4 shadow"
+             style="border:3px solid rgba(212,160,23,0.3);"/>
+      </div>
+      <div class="col-lg-6 fade-in-right">
+        <div class="rent-highlight">
+          <span class="section-tag"><i class="fas fa-calendar-check me-2"></i>Jewellery Rental</span>
+          <h2 class="section-title mt-2">Rent Premium Jewellery<br>for <span>Every Occasion</span></h2>
+          <p class="mb-4" style="color:var(--text-muted);line-height:1.7;">
+            Why buy when you can rent? Look stunning at weddings, parties, and festivals
+            with our premium jewellery rental service. Starting at just ₹299/day with full
+            insurance coverage and home delivery.
+          </p>
+          <div class="rent-step">
+            <div class="step-num">1</div>
+            <div class="step-content"><h5>Choose Your Jewellery</h5><p>Browse 500+ rental pieces online and pick your favourites.</p></div>
+          </div>
+          <div class="rent-step">
+            <div class="step-num">2</div>
+            <div class="step-content"><h5>Book Your Dates</h5><p>Select rental duration and confirm with ₹500 security deposit.</p></div>
+          </div>
+          <div class="rent-step">
+            <div class="step-num">3</div>
+            <div class="step-content"><h5>Home Delivery & Return</h5><p>We deliver to your door and collect after your event.</p></div>
+          </div>
+          <a href="rent.html" class="btn-gold mt-2"><i class="fas fa-ring me-2"></i>Explore Rental Collection</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY CHOOSE US -->
+<section class="section-white py-5">
+  <div class="container">
+    <div class="section-header fade-in-up">
+      <span class="section-tag">Why Siri Kirula</span>
+      <h2 class="section-title">Our <span>Promise</span> to You</h2>
+      <div class="section-divider"><div class="line"></div><div class="diamond"></div><div class="line right"></div></div>
+    </div>
+    <div class="row g-4">
+      <div class="col-lg-3 col-md-6 fade-in-up" data-delay="0">
+        <div class="why-card">
+          <div class="why-num">01</div>
+          <div class="feature-icon mx-auto mb-3"><i class="fas fa-certificate"></i></div>
+          <h5 class="feature-title">100% Certified</h5>
+          <p class="feature-text">Every piece comes with BIS hallmark certificate and gemstone authentication.</p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6 fade-in-up" data-delay="100">
+        <div class="why-card">
+          <div class="why-num">02</div>
+          <div class="feature-icon mx-auto mb-3"><i class="fas fa-hand-holding-usd"></i></div>
+          <h5 class="feature-title">Best Price</h5>
+          <p class="feature-text">We offer competitive prices with a price-match guarantee on all products.</p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6 fade-in-up" data-delay="200">
+        <div class="why-card">
+          <div class="why-num">03</div>
+          <div class="feature-icon mx-auto mb-3"><i class="fas fa-shield-alt"></i></div>
+          <h5 class="feature-title">Insured Rentals</h5>
+          <p class="feature-text">All rental jewellery is fully insured. Rent with zero financial risk.</p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6 fade-in-up" data-delay="300">
+        <div class="why-card">
+          <div class="why-num">04</div>
+          <div class="feature-icon mx-auto mb-3"><i class="fas fa-truck"></i></div>
+          <h5 class="feature-title">Home Delivery</h5>
+          <p class="feature-text">Free home delivery on purchases above ₹5,000 and all rental orders.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="section-cream py-5">
+  <div class="container">
+    <div class="section-header fade-in-up">
+      <span class="section-tag">Customer Stories</span>
+      <h2 class="section-title">What Our <span>Customers</span> Say</h2>
+      <div class="section-divider"><div class="line"></div><div class="diamond"></div><div class="line right"></div></div>
+    </div>
+    <div class="row g-4">
+      <div class="col-md-4 fade-in-up" data-delay="0">
+        <div class="testimonial-card">
+          <div class="rating mb-2"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+          <p class="testimonial-text">"I rented a bridal set from Siri Kirula for my wedding and I was blown away by the quality and service. Got compliments all night. Will definitely use again for our anniversary!"</p>
+          <div class="testimonial-author">
+            <img src="https://i.pravatar.cc/100?img=5" alt="Priya" class="author-avatar"/>
+            <div><div class="author-name">Priya Sharma</div><div class="author-loc"><i class="fas fa-map-marker-alt me-1"></i>Kiribathgoda</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 fade-in-up" data-delay="150">
+        <div class="testimonial-card">
+          <div class="rating mb-2"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+          <p class="testimonial-text">"The emerald necklace I purchased is absolutely stunning. The hallmark certification gave me full confidence. Packaging was royal and delivery was on time. Highly recommend!"</p>
+          <div class="testimonial-author">
+            <img src="https://i.pravatar.cc/100?img=12" alt="Anita" class="author-avatar"/>
+            <div><div class="author-name">Anita Patel</div><div class="author-loc"><i class="fas fa-map-marker-alt me-1"></i>Ahmedabad</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 fade-in-up" data-delay="300">
+        <div class="testimonial-card">
+          <div class="rating mb-2"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></div>
+          <p class="testimonial-text">"Rented diamond earrings for Diwali party at just ₹499 for 2 days. The rental process was seamless and the pieces looked expensive. Best deal ever for the occasion!"</p>
+          <div class="testimonial-author">
+            <img src="https://i.pravatar.cc/100?img=9" alt="Deepa" class="author-avatar"/>
+            <div><div class="author-name">Deepa Nair</div><div class="author-loc"><i class="fas fa-map-marker-alt me-1"></i>Bangalore</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA SECTION -->
+<section class="cta-section">
+  <div class="container">
+    <div class="cta-content">
+      <h2 class="cta-title fade-in-up">Ready to Shine? <span>Let's Find Your Perfect Piece</span></h2>
+      <p class="cta-text fade-in-up" data-delay="100">Book a free consultation with our jewellery experts or visit us in-store. We'll help you find the perfect piece for any budget.</p>
+      <div class="d-flex gap-3 justify-content-center flex-wrap fade-in-up" data-delay="200">
+        <a href="shop.html" class="btn-gold"><i class="fas fa-gem me-2"></i>Shop Collection</a>
+        <a href="contact.html" class="btn-outline-gold"><i class="fas fa-phone-alt me-2"></i>Book Consultation</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer-main">
+  <div class="container">
+    <div class="row g-4">
+      <div class="col-lg-4 col-md-6">
+        <div class="footer-brand">
+          <div class="d-flex align-items-center gap-2 mb-2">
+            <div class="brand-gem" style="width:36px;height:36px;font-size:1.1rem;">💎</div>
+            <span class="footer-brand-name">Siri Kirula</span>
+          </div>
+          <p class="footer-desc">Trusted fine jewellery store since 1998. Offering premium gold, diamond and gemstone jewellery for purchase and rent.</p>
+        </div>
+        <div class="footer-social">
+          <a href="#" class="social-btn"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" class="social-btn"><i class="fab fa-instagram"></i></a>
+          <a href="#" class="social-btn"><i class="fab fa-youtube"></i></a>
+          <a href="#" class="social-btn"><i class="fab fa-whatsapp"></i></a>
+          <a href="#" class="social-btn"><i class="fab fa-pinterest-p"></i></a>
+        </div>
+      </div>
+      <div class="col-lg-2 col-md-6 col-6">
+        <div class="footer-heading">Quick Links</div>
+        <a href="index.html" class="footer-link">Home</a>
+        <a href="shop.html" class="footer-link">Buy Jewellery</a>
+        <a href="rent.html" class="footer-link">Rent Jewellery</a>
+        <a href="gallery.html" class="footer-link">Gallery</a>
+        <a href="contact.html" class="footer-link">Contact Us</a>
+      </div>
+      <div class="col-lg-2 col-md-6 col-6">
+        <div class="footer-heading">Collections</div>
+        <a href="shop.html" class="footer-link">Necklaces</a>
+        <a href="shop.html" class="footer-link">Earrings</a>
+        <a href="shop.html" class="footer-link">Rings</a>
+        <a href="shop.html" class="footer-link">Bangles</a>
+        <a href="shop.html" class="footer-link">Bridal Sets</a>
+      </div>
+      <div class="col-lg-4 col-md-6">
+        <div class="footer-heading">Contact Info</div>
+        <div class="d-flex gap-2 mb-3 align-items-start">
+          <i class="fas fa-map-marker-alt mt-1" style="color:var(--gold);"></i>
+          <span style="font-size:.85rem;color:rgba(255,255,255,.6);">123, Jewellery Lane, Gold Market,<br>Kiribathgoda - 400001, Sri Lanka</span>
+        </div>
+        <div class="d-flex gap-2 mb-2 align-items-center">
+          <i class="fas fa-phone" style="color:var(--gold);"></i>
+          <span style="font-size:.85rem;color:rgba(255,255,255,.6);">+91 98765 43210</span>
+        </div>
+        <div class="d-flex gap-2 mb-3 align-items-center">
+          <i class="fas fa-envelope" style="color:var(--gold);"></i>
+          <span style="font-size:.85rem;color:rgba(255,255,255,.6);">info@royalgems.in</span>
+        </div>
+        <div style="background:rgba(255,255,255,.05);border:1px solid rgba(212,160,23,.2);border-radius:10px;padding:.8rem 1rem;">
+          <div style="font-size:.75rem;color:var(--gold);font-weight:600;letter-spacing:1px;margin-bottom:.3rem;">STORE HOURS</div>
+          <div style="font-size:.82rem;color:rgba(255,255,255,.6);">Mon – Sat: 10:00 AM – 8:00 PM</div>
+          <div style="font-size:.82rem;color:rgba(255,255,255,.6);">Sunday: 11:00 AM – 6:00 PM</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 Siri Kirula. Crafted with <span>♥</span> in Sri Lanka. All rights reserved.</span>
+  </div>
+</footer>
+
+<!-- SCROLL TOP -->
+<button id="scrollTop" title="Back to top"><i class="fas fa-chevron-up"></i></button>
+
+<!-- QUICK VIEW MODAL -->
+<div class="modal fade modal-product" id="quickViewModal" tabindex="-1">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="qvModalTitle"></h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body p-0">
+        <div class="row g-0">
+          <div class="col-md-5">
+            <img id="qvModalImg" src="" alt="" class="img-fluid w-100" style="max-height:320px;object-fit:cover;"/>
+          </div>
+          <div class="col-md-7 p-4">
+            <div class="product-category" id="qvModalCat"></div>
+            <h4 class="product-name mt-1" id="qvModalName"></h4>
+            <p id="qvModalDesc" style="font-size:.9rem;color:var(--text-muted);line-height:1.7;" class="mt-2"></p>
+            <div class="price mt-3" id="qvModalPrice"></div>
+            <div class="d-flex gap-2 mt-3">
+              <button class="btn-gold btn-addcart flex-grow-1"><i class="fas fa-shopping-bag me-2"></i>Add to Cart</button>
+              <button class="overlay-btn btn-wishlist" style="width:46px;height:46px;border-radius:8px;background:var(--gold-pale);color:var(--maroon);"><i class="far fa-heart"></i></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Bootstrap 5 JS + Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<!-- jQuery 3.7 -->
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<!-- Custom JS -->
+<script src="js/main2.js"></script>
+</body>
+</html>

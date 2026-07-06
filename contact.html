@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contact Us – Siri Kirula</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💎</text></svg>"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet"/>
+  <link href="css/style2.css" rel="stylesheet"/>
+  <style>
+    h1,h2,h3,h4,h5,.brand-name,.section-title,.page-hero-title {
+      font-family: 'Playfair Display', Georgia, serif !important;
+    }
+    /* Contact info cards */
+    .contact-info-card {
+      background: var(--white);
+      border: 2px solid rgba(212,160,23,0.2);
+      border-radius: 20px;
+      padding: 2rem 1.5rem;
+      text-align: center;
+      transition: all 0.4s;
+      height: 100%;
+    }
+    .contact-info-card:hover {
+      transform: translateY(-8px);
+      border-color: var(--gold);
+      box-shadow: 0 16px 40px var(--shadow-gold);
+    }
+    .contact-icon-box {
+      width: 70px; height: 70px;
+      background: linear-gradient(135deg, var(--maroon), var(--maroon-light));
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 1.2rem;
+      font-size: 1.6rem; color: var(--gold-light);
+      box-shadow: 0 6px 20px var(--shadow);
+      transition: transform 0.3s;
+    }
+    .contact-info-card:hover .contact-icon-box { transform: scale(1.1) rotate(5deg); }
+    .contact-info-card h5 { color: var(--maroon-dark); font-weight: 700; margin-bottom: 0.5rem; font-size: 1rem; }
+    .contact-info-card p { color: var(--text-muted); font-size: 0.88rem; line-height: 1.7; margin: 0; }
+    .contact-info-card a { color: var(--maroon); text-decoration: none; font-weight: 600; }
+    .contact-info-card a:hover { color: var(--gold); }
+    /* Contact form */
+    .contact-form-wrap {
+      background: var(--white);
+      border: 2px solid rgba(212,160,23,0.2);
+      border-radius: 24px;
+      padding: 3rem;
+      box-shadow: 0 10px 40px var(--shadow);
+    }
+    .cf-title { color: var(--maroon-dark); font-size: 1.6rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .cf-subtitle { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 2rem; }
+    .subject-chip {
+      display: inline-block;
+      padding: 6px 18px; border-radius: 20px;
+      border: 1.5px solid rgba(212,160,23,0.3);
+      color: var(--maroon); font-size: 0.8rem; font-weight: 600;
+      cursor: pointer; transition: all 0.3s; margin: 3px;
+    }
+    .subject-chip.selected, .subject-chip:hover {
+      background: linear-gradient(135deg, var(--maroon), var(--maroon-light));
+      color: var(--gold-light); border-color: var(--maroon);
+    }
+    /* Map placeholder */
+    .map-placeholder {
+      background: linear-gradient(135deg, #fff3e0, #fbe9e7);
+      border: 2px solid rgba(212,160,23,0.3);
+      border-radius: 20px;
+      height: 340px;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center; padding: 2rem;
+      position: relative; overflow: hidden;
+    }
+    .map-placeholder::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: url("https://images.unsplash.com/photo-1524661135-423995f22d0b?w=900&q=60") center/cover;
+      opacity: 0.15; border-radius: 18px;
+    }
+    .map-content { position: relative; z-index: 1; }
+    /* Store info sidebar */
+    .store-info-card {
+      background: linear-gradient(160deg, var(--maroon-dark), var(--maroon));
+      border-radius: 20px;
+      padding: 2rem;
+      color: rgba(255,255,255,.85);
+      height: 100%;
+    }
+    .store-info-card h4 { color: var(--gold-light); font-weight: 700; margin-bottom: 1.5rem; }
+    .store-row { display: flex; gap: 12px; margin-bottom: 1.2rem; }
+    .store-icon { width: 36px; height: 36px; background: rgba(212,160,23,.15); border: 1px solid rgba(212,160,23,.3); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--gold-light); font-size: 0.9rem; flex-shrink: 0; }
+    .store-label { font-size: 0.75rem; color: rgba(255,255,255,.5); margin-bottom: 2px; letter-spacing: 0.5px; text-transform: uppercase; }
+    .store-value { font-size: 0.88rem; color: rgba(255,255,255,.9); line-height: 1.5; }
+    .hours-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid rgba(212,160,23,.1); font-size: .82rem; }
+    .hours-row:last-child { border-bottom: none; }
+    .hours-day { color: rgba(255,255,255,.7); }
+    .hours-time { color: var(--gold-light); font-weight: 600; }
+    /* FAQ accordion */
+    .faq-accordion .accordion-item {
+      background: var(--white);
+      border: 1.5px solid rgba(212,160,23,0.2) !important;
+      border-radius: 12px !important;
+      margin-bottom: 10px;
+      overflow: hidden;
+    }
+    .faq-accordion .accordion-button {
+      background: var(--white);
+      color: var(--maroon-dark);
+      font-weight: 600;
+      font-size: 0.92rem;
+      padding: 1rem 1.3rem;
+      box-shadow: none !important;
+    }
+    .faq-accordion .accordion-button:not(.collapsed) {
+      background: linear-gradient(135deg, var(--maroon), var(--maroon-light));
+      color: var(--gold-light);
+    }
+    .faq-accordion .accordion-button::after {
+      filter: none;
+    }
+    .faq-accordion .accordion-button:not(.collapsed)::after {
+      filter: invert(1) brightness(2);
+    }
+    .faq-accordion .accordion-body {
+      font-size: 0.87rem; color: var(--text-muted); line-height: 1.7;
+      padding: 1rem 1.3rem;
+      border-top: 1px solid rgba(212,160,23,0.15);
+    }
+    /* Social contact */
+    .social-contact-card {
+      background: var(--white);
+      border: 2px solid rgba(212,160,23,0.2);
+      border-radius: 16px;
+      padding: 1.5rem;
+      text-align: center;
+      transition: all 0.35s;
+    }
+    .social-contact-card:hover { transform: translateY(-6px); box-shadow: 0 12px 30px var(--shadow-gold); border-color: var(--gold); }
+    .social-contact-card .s-icon { font-size: 1.8rem; margin-bottom: 8px; }
+    .social-contact-card h6 { font-size: .85rem; font-weight: 700; color: var(--maroon-dark); margin: 0 0 4px; }
+    .social-contact-card span { font-size: .78rem; color: var(--text-muted); }
+    .fb-color { color: #1877f2; }
+    .ig-color { color: #e1306c; }
+    .wa-color { color: #25d366; }
+    .yt-color { color: #ff0000; }
+  </style>
+</head>
+<body>
+
+<!-- PRELOADER -->
+<div id="preloader"><div class="gem-spin"></div><p>Siri Kirula</p></div>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-custom">
+  <div class="container">
+    <a class="navbar-brand p-0" href="index.html">
+      <div class="navbar-brand-box">
+       <img class="brand-gem" src="assets/logo.png">
+        <div class="brand-text">
+          <div class="brand-name">Siri Kirula</div>
+          <div class="brand-tagline">Fine Jewellery Since 1998</div>
+        </div>
+      </div>
+    </a>
+    <button class="navbar-toggler navbar-toggler-custom border-0 bg-transparent" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+      <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navMenu">
+      <ul class="navbar-nav ms-auto align-items-center gap-1">
+        <li class="nav-item"><a class="nav-link-custom" href="index.html">Home</a></li>
+        <li class="nav-item"><a class="nav-link-custom" href="shop.html">Buy Jewellery</a></li>
+        <li class="nav-item"><a class="nav-link-custom" href="rent.html">Rent Jewellery</a></li>
+        <li class="nav-item"><a class="nav-link-custom" href="gallery.html">Gallery</a></li>
+        <li class="nav-item"><a class="nav-link-custom active" href="contact.html">Contact</a></li>
+        <li class="nav-item ms-2"><a class="nav-link-custom nav-cta" href="shop.html"><i class="fas fa-shopping-bag me-1"></i>Shop Now</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="container">
+    <h1 class="page-hero-title fade-in-up">Get in Touch</h1>
+    <p class="page-hero-breadcrumb fade-in-up" data-delay="100">
+      <a href="index.html">Home</a> <i class="fas fa-chevron-right mx-2" style="font-size:.7rem;"></i> Contact Us
+    </p>
+    <p class="fade-in-up" data-delay="200" style="color:rgba(255,255,255,.75);max-width:500px;margin:.8rem auto 0;font-size:.95rem;line-height:1.7;">
+      We're here for all your jewellery needs — buying, renting, or custom orders. Reach out anytime.
+    </p>
+  </div>
+</div>
+
+<!-- CONTACT INFO CARDS -->
+<section class="section-cream py-5">
+  <div class="container">
+    <div class="row g-4">
+      <div class="col-lg-3 col-md-6 fade-in-up" data-delay="0">
+        <div class="contact-info-card">
+          <div class="contact-icon-box"><i class="fas fa-map-marker-alt"></i></div>
+          <h5>Our Showroom</h5>
+          <p>123, Jewellery Lane, Gold Market, Zaveri Bazaar, Kiribathgoda – 400002</p>
+          <a href="#map" class="d-block mt-2" style="font-size:.82rem;"><i class="fas fa-directions me-1"></i>Get Directions</a>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6 fade-in-up" data-delay="100">
+        <div class="contact-info-card">
+          <div class="contact-icon-box"><i class="fas fa-phone-alt"></i></div>
+          <h5>Call Us</h5>
+          <p><a href="tel:+919876543210">+91 98765 43210</a><br/><a href="tel:+912222334455">+91 2222 334455</a></p>
+          <a href="https://wa.me/919876543210" class="d-block mt-2" style="font-size:.82rem;color:#25d366;"><i class="fab fa-whatsapp me-1"></i>WhatsApp Us</a>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6 fade-in-up" data-delay="200">
+        <div class="contact-info-card">
+          <div class="contact-icon-box"><i class="fas fa-envelope"></i></div>
+          <h5>Email Us</h5>
+          <p><a href="mailto:info@royalgems.in">info@royalgems.in</a><br/><a href="mailto:rentals@royalgems.in">rentals@royalgems.in</a></p>
+          <p class="mt-2" style="font-size:.78rem;">Response within 2 hours</p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6 fade-in-up" data-delay="300">
+        <div class="contact-info-card">
+          <div class="contact-icon-box"><i class="fas fa-clock"></i></div>
+          <h5>Store Hours</h5>
+          <p>Mon – Sat: 10:00 AM – 8:00 PM<br/>Sunday: 11:00 AM – 6:00 PM<br/>Holidays: Varies</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT FORM + STORE INFO -->
+<section class="section-white py-5">
+  <div class="container">
+    <div class="row g-5">
+      <!-- Contact Form -->
+      <div class="col-lg-7 fade-in-left">
+        <div class="contact-form-wrap">
+          <h3 class="cf-title"><i class="fas fa-paper-plane me-2" style="color:var(--gold);"></i>Send Us a Message</h3>
+          <p class="cf-subtitle">Fill in the form below and our team will get back to you promptly.</p>
+          <!-- Subject chips -->
+          <div class="mb-3">
+            <label class="form-label-custom mb-2">Select Subject</label>
+            <div>
+              <span class="subject-chip selected" onclick="selectChip(this)">General Enquiry</span>
+              <span class="subject-chip" onclick="selectChip(this)">Buy Jewellery</span>
+              <span class="subject-chip" onclick="selectChip(this)">Rent Jewellery</span>
+              <span class="subject-chip" onclick="selectChip(this)">Custom Order</span>
+              <span class="subject-chip" onclick="selectChip(this)">Repair / Polish</span>
+              <span class="subject-chip" onclick="selectChip(this)">Feedback</span>
+            </div>
+          </div>
+          <form id="contactForm">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label-custom">Full Name *</label>
+                <input type="text" class="form-control-custom w-100" placeholder="Your Full Name" required/>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label-custom">Email Address *</label>
+                <input type="email" class="form-control-custom w-100" placeholder="your@email.com" required/>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label-custom">Phone Number</label>
+                <input type="tel" class="form-control-custom w-100" placeholder="+91 98765 43210"/>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label-custom">City</label>
+                <input type="text" class="form-control-custom w-100" placeholder="Your City"/>
+              </div>
+              <div class="col-12">
+                <label class="form-label-custom">Your Message *</label>
+                <textarea class="form-control-custom w-100" rows="5" placeholder="Tell us how we can help you..." required></textarea>
+              </div>
+              <div class="col-12">
+                <div class="d-flex align-items-center gap-2" style="background:var(--gold-pale);padding:12px;border-radius:10px;border:1px solid rgba(212,160,23,.3);">
+                  <i class="fas fa-shield-alt" style="color:var(--gold);"></i>
+                  <p style="font-size:.8rem;color:var(--text-muted);margin:0;">Your information is secure and will never be shared with third parties.</p>
+                </div>
+              </div>
+              <div class="col-12">
+                <button type="submit" class="btn-gold w-100" style="font-size:1rem;padding:14px;border-radius:10px;"><i class="fas fa-paper-plane me-2"></i>Send Message</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Store Info -->
+      <div class="col-lg-5 fade-in-right">
+        <div class="store-info-card">
+          <h4><i class="fas fa-gem me-2"></i>Siri Kirula Kiribathgoda</h4>
+          <div class="store-row">
+            <div class="store-icon"><i class="fas fa-map-marker-alt"></i></div>
+            <div><div class="store-label">Address</div><div class="store-value">123, Jewellery Lane, Gold Market,<br/>Zaveri Bazaar, Kiribathgoda – 400002</div></div>
+          </div>
+          <div class="store-row">
+            <div class="store-icon"><i class="fas fa-phone-alt"></i></div>
+            <div><div class="store-label">Phone / WhatsApp</div><div class="store-value">+91 98765 43210<br/>+91 2222 334455</div></div>
+          </div>
+          <div class="store-row">
+            <div class="store-icon"><i class="fas fa-envelope"></i></div>
+            <div><div class="store-label">Email</div><div class="store-value">info@royalgems.in<br/>rentals@royalgems.in</div></div>
+          </div>
+          <div class="store-row" style="margin-bottom:1.5rem;">
+            <div class="store-icon"><i class="fas fa-clock"></i></div>
+            <div>
+              <div class="store-label">Store Hours</div>
+              <div class="hours-row"><span class="hours-day">Monday – Friday</span><span class="hours-time">10:00 – 20:00</span></div>
+              <div class="hours-row"><span class="hours-day">Saturday</span><span class="hours-time">10:00 – 20:00</span></div>
+              <div class="hours-row"><span class="hours-day">Sunday</span><span class="hours-time">11:00 – 18:00</span></div>
+              <div class="hours-row"><span class="hours-day">Public Holidays</span><span class="hours-time">Varies</span></div>
+            </div>
+          </div>
+          <hr style="border-color:rgba(212,160,23,.2);margin:1rem 0;"/>
+          <div style="font-size:.82rem;color:rgba(255,255,255,.6);margin-bottom:1rem;">Connect with us on social media</div>
+          <div class="d-flex gap-2 flex-wrap">
+            <a href="#" class="social-btn"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="social-btn"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="social-btn"><i class="fab fa-youtube"></i></a>
+            <a href="#" class="social-btn"><i class="fab fa-whatsapp"></i></a>
+            <a href="#" class="social-btn"><i class="fab fa-pinterest-p"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MAP SECTION -->
+<section class="section-cream py-5" id="map">
+  <div class="container">
+    <div class="section-header fade-in-up">
+      <span class="section-tag">Find Us</span>
+      <h2 class="section-title">Visit Our <span>Showroom</span></h2>
+      <div class="section-divider"><div class="line"></div><div class="diamond"></div><div class="line right"></div></div>
+    </div>
+    <div class="map-placeholder fade-in-up">
+      <div class="map-content">
+        <div style="width:72px;height:72px;background:linear-gradient(135deg,var(--maroon),var(--maroon-light));border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;border:3px solid var(--gold);font-size:1.8rem;color:var(--gold-light);">
+          <i class="fas fa-map-marker-alt"></i>
+        </div>
+        <h4 style="color:var(--maroon-dark);font-weight:700;margin-bottom:.5rem;">Siri Kirula — Kiribathgoda</h4>
+        <p style="color:var(--text-muted);font-size:.9rem;margin-bottom:1.5rem;">123, Jewellery Lane, Gold Market,<br/>Zaveri Bazaar, Kiribathgoda – 400002</p>
+        <div class="d-flex gap-3 justify-content-center flex-wrap">
+          <a href="https://maps.google.com" target="_blank" rel="noopener noreferrer" class="btn-gold" style="font-size:.85rem;padding:10px 22px;border-radius:8px;"><i class="fab fa-google me-2"></i>Open in Google Maps</a>
+          <a href="https://maps.google.com" target="_blank" rel="noopener noreferrer" class="btn-maroon" style="font-size:.85rem;padding:10px 22px;border-radius:8px;"><i class="fas fa-directions me-2"></i>Get Directions</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOCIAL CARDS -->
+<section class="section-white py-5">
+  <div class="container">
+    <div class="section-header fade-in-up">
+      <span class="section-tag">Social Media</span>
+      <h2 class="section-title">Connect with <span>Siri Kirula</span></h2>
+      <div class="section-divider"><div class="line"></div><div class="diamond"></div><div class="line right"></div></div>
+    </div>
+    <div class="row g-3 justify-content-center">
+      <div class="col-6 col-md-3 fade-in-up" data-delay="0">
+        <div class="social-contact-card">
+          <div class="s-icon fb-color"><i class="fab fa-facebook-f"></i></div>
+          <h6>Facebook</h6>
+          <span>/royalgemsin</span>
+        </div>
+      </div>
+      <div class="col-6 col-md-3 fade-in-up" data-delay="80">
+        <div class="social-contact-card">
+          <div class="s-icon ig-color"><i class="fab fa-instagram"></i></div>
+          <h6>Instagram</h6>
+          <span>@royalgemsin</span>
+        </div>
+      </div>
+      <div class="col-6 col-md-3 fade-in-up" data-delay="160">
+        <div class="social-contact-card">
+          <div class="s-icon wa-color"><i class="fab fa-whatsapp"></i></div>
+          <h6>WhatsApp</h6>
+          <span>+91 98765 43210</span>
+        </div>
+      </div>
+      <div class="col-6 col-md-3 fade-in-up" data-delay="240">
+        <div class="social-contact-card">
+          <div class="s-icon yt-color"><i class="fab fa-youtube"></i></div>
+          <h6>YouTube</h6>
+          <span>Siri Kirula Sri Lanka</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section-cream py-5">
+  <div class="container">
+    <div class="section-header fade-in-up">
+      <span class="section-tag">Common Questions</span>
+      <h2 class="section-title">Frequently Asked <span>Questions</span></h2>
+      <div class="section-divider"><div class="line"></div><div class="diamond"></div><div class="line right"></div></div>
+    </div>
+    <div class="row g-4">
+      <div class="col-lg-6 fade-in-left">
+        <div class="accordion faq-accordion" id="faq1">
+          <div class="accordion-item">
+            <h2 class="accordion-header"><button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1a">Do you offer home delivery?</button></h2>
+            <div id="faq1a" class="accordion-collapse collapse show" data-bs-parent="#faq1">
+              <div class="accordion-body">Yes! We offer insured home delivery across Kiribathgoda, Delhi, Bangalore, Hyderabad, Chennai, Pune and 50+ cities across Sri Lanka. Free delivery on orders above ₹10,000.</div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq1b">What certifications do your jewellery pieces carry?</button></h2>
+            <div id="faq1b" class="accordion-collapse collapse" data-bs-parent="#faq1">
+              <div class="accordion-body">All our gold jewellery carries BIS Hallmark certification. Diamond jewellery comes with IGI or GIA certificates. Gemstone pieces are certified by Gemological Institute of Sri Lanka.</div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq1c">Can I do a custom/made-to-order piece?</button></h2>
+            <div id="faq1c" class="accordion-collapse collapse" data-bs-parent="#faq1">
+              <div class="accordion-body">Absolutely! We specialize in custom jewellery. Share your design idea or reference photo with us. Typical turnaround is 3–4 weeks depending on complexity. Custom orders require a 50% advance.</div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq1d">What is your return/exchange policy?</button></h2>
+            <div id="faq1d" class="accordion-collapse collapse" data-bs-parent="#faq1">
+              <div class="accordion-body">We offer a 7-day return policy for online purchases. Jewellery must be in original condition with tags intact. Exchange for another piece of equal/higher value is accepted within 30 days.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6 fade-in-right">
+        <div class="accordion faq-accordion" id="faq2">
+          <div class="accordion-item">
+            <h2 class="accordion-header"><button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq2a">How does the rental process work?</button></h2>
+            <div id="faq2a" class="accordion-collapse collapse show" data-bs-parent="#faq2">
+              <div class="accordion-body">Simply select your jewellery, submit the rental form, pay the rental amount + refundable security deposit. We deliver insured jewellery on your event day. Collect the security deposit back after return within 24 hours.</div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2b">Do you offer jewellery repair and polishing?</button></h2>
+            <div id="faq2b" class="accordion-collapse collapse" data-bs-parent="#faq2">
+              <div class="accordion-body">Yes! We offer complete jewellery care services including cleaning, polishing, stone replacement, and resizing. Bring your jewellery to our showroom or arrange pickup for ₹99 within Kiribathgoda.</div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2c">What payment methods do you accept?</button></h2>
+            <div id="faq2c" class="accordion-collapse collapse" data-bs-parent="#faq2">
+              <div class="accordion-body">We accept UPI, all major credit/debit cards, net banking, EMI on cards (3–24 months), PayTM, Google Pay, PhonePe, and cash at our showroom. Online orders use our secured payment gateway.</div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2d">Is there an appointment system for the showroom?</button></h2>
+            <div id="faq2d" class="accordion-collapse collapse" data-bs-parent="#faq2">
+              <div class="accordion-body">Walk-ins are always welcome during store hours. For a dedicated personal shopping experience or bridal consultation, we recommend booking an appointment via WhatsApp or phone for a private session with our experts.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="container">
+    <div class="cta-content">
+      <h2 class="cta-title fade-in-up">Ready to Find Your <span>Perfect Piece?</span></h2>
+      <p class="cta-text fade-in-up" data-delay="100">Visit our showroom in Kiribathgoda or browse our entire collection online. We ship all over Sri Lanka.</p>
+      <div class="d-flex gap-3 justify-content-center flex-wrap fade-in-up" data-delay="200">
+        <a href="shop.html" class="btn-gold"><i class="fas fa-gem me-2"></i>Shop Now</a>
+        <a href="rent.html" class="btn-outline-gold"><i class="fas fa-calendar-alt me-2"></i>Rent Jewellery</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer-main">
+  <div class="container">
+    <div class="row g-4">
+      <div class="col-lg-4 col-md-6">
+        <div class="footer-brand">
+          <div class="d-flex align-items-center gap-2 mb-2">
+            <div class="brand-gem" style="width:36px;height:36px;font-size:1.1rem;">💎</div>
+            <span class="footer-brand-name">Siri Kirula</span>
+          </div>
+          <p class="footer-desc">Trusted fine jewellery store since 1998. Offering premium gold, diamond and gemstone jewellery for purchase and rent.</p>
+        </div>
+        <div class="footer-social">
+          <a href="#" class="social-btn"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" class="social-btn"><i class="fab fa-instagram"></i></a>
+          <a href="#" class="social-btn"><i class="fab fa-youtube"></i></a>
+          <a href="#" class="social-btn"><i class="fab fa-whatsapp"></i></a>
+        </div>
+      </div>
+      <div class="col-lg-2 col-md-6 col-6">
+        <div class="footer-heading">Quick Links</div>
+        <a href="index.html" class="footer-link">Home</a>
+        <a href="shop.html" class="footer-link">Buy Jewellery</a>
+        <a href="rent.html" class="footer-link">Rent Jewellery</a>
+        <a href="gallery.html" class="footer-link">Gallery</a>
+        <a href="contact.html" class="footer-link">Contact Us</a>
+      </div>
+      <div class="col-lg-2 col-md-6 col-6">
+        <div class="footer-heading">Services</div>
+        <a href="#" class="footer-link">Custom Orders</a>
+        <a href="#" class="footer-link">Repair & Polish</a>
+        <a href="#" class="footer-link">Bridal Consulting</a>
+        <a href="#" class="footer-link">Insurance</a>
+        <a href="#" class="footer-link">Home Delivery</a>
+      </div>
+      <div class="col-lg-4 col-md-6">
+        <div class="footer-heading">Contact Info</div>
+        <div class="d-flex gap-2 mb-2"><i class="fas fa-map-marker-alt mt-1" style="color:var(--gold);"></i><span style="font-size:.85rem;color:rgba(255,255,255,.6);">123, Jewellery Lane, Gold Market, Kiribathgoda</span></div>
+        <div class="d-flex gap-2 mb-2"><i class="fas fa-phone" style="color:var(--gold);"></i><span style="font-size:.85rem;color:rgba(255,255,255,.6);">+91 98765 43210</span></div>
+        <div class="d-flex gap-2"><i class="fas fa-envelope" style="color:var(--gold);"></i><span style="font-size:.85rem;color:rgba(255,255,255,.6);">info@royalgems.in</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom"><span>© 2025 Siri Kirula. All rights reserved.</span></div>
+</footer>
+
+<button id="scrollTop" title="Back to top"><i class="fas fa-chevron-up"></i></button>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="js/main2.js"></script>
+<script>
+  // Subject chip selector
+  function selectChip(el){
+    document.querySelectorAll('.subject-chip').forEach(function(c){ c.classList.remove('selected'); });
+    el.classList.add('selected');
+  }
+</script>
+</body>
+</html>

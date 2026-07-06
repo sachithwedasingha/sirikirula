@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Gallery – Siri Kirula</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💎</text></svg>"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet"/>
+  <link href="css/style2.css" rel="stylesheet"/>
+  <style>
+    h1,h2,h3,h4,h5,.brand-name,.section-title,.page-hero-title {
+      font-family: 'Playfair Display', Georgia, serif !important;
+    }
+    /* Masonry gallery */
+    .masonry-grid {
+      columns: 3; column-gap: 14px;
+    }
+    .masonry-item {
+      break-inside: avoid; margin-bottom: 14px;
+      position: relative; overflow: hidden; border-radius: 12px;
+      cursor: pointer;
+    }
+    .masonry-item img {
+      width: 100%; display: block;
+      transition: transform 0.5s, filter 0.4s;
+      border-radius: 12px;
+    }
+    .masonry-item:hover img { transform: scale(1.05); filter: brightness(0.75); }
+    .masonry-overlay {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      opacity: 0; transition: opacity 0.4s;
+      padding: 1rem;
+    }
+    .masonry-item:hover .masonry-overlay { opacity: 1; }
+    .masonry-overlay i { font-size: 2rem; color: var(--gold-light); margin-bottom: 8px; }
+    .masonry-overlay span { font-size: 0.85rem; color: var(--white); font-weight: 600; text-align: center; font-family: 'Playfair Display', serif; }
+    .masonry-overlay .cat-tag { font-size: 0.7rem; color: var(--gold-light); letter-spacing: 2px; text-transform: uppercase; margin-top: 4px; }
+    /* Filter tabs */
+    .gallery-tab {
+      background: transparent; border: 1.5px solid rgba(212,160,23,0.3);
+      color: var(--maroon); padding: 8px 22px; border-radius: 30px;
+      font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: all 0.3s;
+      letter-spacing: 0.5px;
+    }
+    .gallery-tab:hover, .gallery-tab.active {
+      background: linear-gradient(135deg, var(--maroon), var(--maroon-light));
+      color: var(--gold-light); border-color: var(--maroon);
+      transform: translateY(-2px); box-shadow: 0 4px 15px var(--shadow);
+    }
+    /* Lightbox */
+    #lightboxModal .modal-content { background: rgba(10,0,0,0.95); border: 2px solid var(--gold); border-radius: 16px; }
+    #lightboxModal .modal-header { border-bottom: 1px solid rgba(212,160,23,0.2); padding: 12px 20px; }
+    #lightboxModal .modal-title { color: var(--gold-light); font-family: 'Playfair Display', serif; font-size: 1.1rem; }
+    #lightboxModal .modal-body { padding: 0; display: flex; align-items: center; justify-content: center; min-height: 300px; }
+    #lightboxModal img { max-height: 70vh; width: 100%; object-fit: contain; }
+    /* Awards strip */
+    .award-strip {
+      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      padding: 16px 0;
+    }
+    .award-item { text-align: center; padding: 0 20px; }
+    .award-item h6 { font-size: .82rem; font-weight: 700; color: var(--maroon-dark); margin: 0; }
+    .award-item span { font-size: .72rem; color: rgba(90,0,0,.7); }
+    /* Video section */
+    .video-thumb {
+      position: relative; border-radius: 16px; overflow: hidden; cursor: pointer;
+    }
+    .video-thumb img { width: 100%; display: block; filter: brightness(0.7); transition: filter .4s; }
+    .video-thumb:hover img { filter: brightness(0.5); }
+    .play-btn {
+      position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+    }
+    .play-icon {
+      width: 72px; height: 72px; border-radius: 50%;
+      background: rgba(212,160,23,0.9);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.6rem; color: var(--maroon-dark);
+      transition: transform .3s, box-shadow .3s;
+      box-shadow: 0 0 0 12px rgba(212,160,23,0.2);
+    }
+    .video-thumb:hover .play-icon { transform: scale(1.1); box-shadow: 0 0 0 18px rgba(212,160,23,0.15); }
+    @media(max-width:768px){ .masonry-grid { columns: 2; } }
+    @media(max-width:480px){ .masonry-grid { columns: 1; } }
+  </style>
+</head>
+<body>
+
+<!-- PRELOADER -->
+<div id="preloader"><div class="gem-spin"></div><p>Siri Kirula</p></div>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-custom">
+  <div class="container">
+    <a class="navbar-brand p-0" href="index.html">
+      <div class="navbar-brand-box">
+        <img class="brand-gem" src="assets/logo.png">
+        <div class="brand-text">
+          <div class="brand-name">Siri Kirula</div>
+          <div class="brand-tagline">Fine Jewellery Since 1998</div>
+        </div>
+      </div>
+    </a>
+    <button class="navbar-toggler navbar-toggler-custom border-0 bg-transparent" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+      <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navMenu">
+      <ul class="navbar-nav ms-auto align-items-center gap-1">
+        <li class="nav-item"><a class="nav-link-custom" href="index.html">Home</a></li>
+        <li class="nav-item"><a class="nav-link-custom" href="shop.html">Buy Jewellery</a></li>
+        <li class="nav-item"><a class="nav-link-custom" href="rent.html">Rent Jewellery</a></li>
+        <li class="nav-item"><a class="nav-link-custom active" href="gallery.html">Gallery</a></li>
+        <li class="nav-item"><a class="nav-link-custom" href="contact.html">Contact</a></li>
+        <li class="nav-item ms-2"><a class="nav-link-custom nav-cta" href="shop.html"><i class="fas fa-shopping-bag me-1"></i>Shop Now</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="container">
+    <h1 class="page-hero-title fade-in-up">Our Jewellery Gallery</h1>
+    <p class="page-hero-breadcrumb fade-in-up" data-delay="100">
+      <a href="index.html">Home</a> <i class="fas fa-chevron-right mx-2" style="font-size:.7rem;"></i> Gallery
+    </p>
+    <p class="fade-in-up" data-delay="200" style="color:rgba(255,255,255,.75);max-width:500px;margin:.8rem auto 0;font-size:.95rem;line-height:1.7;">
+      A visual journey through our handcrafted masterpieces — each piece tells a story of artistry and elegance.
+    </p>
+  </div>
+</div>
+
+<!-- AWARDS STRIP -->
+<div class="award-strip">
+  <div class="container">
+    <div class="row text-center g-3">
+      <div class="col-6 col-md-3"><div class="award-item"><i class="fas fa-trophy fa-lg mb-1" style="color:var(--maroon);"></i><h6>Best Jeweller 2024</h6><span>Sri Lanka Retail Awards</span></div></div>
+      <div class="col-6 col-md-3"><div class="award-item"><i class="fas fa-medal fa-lg mb-1" style="color:var(--maroon);"></i><h6>Top 10 Jewellers</h6><span>Forbes Sri Lanka 2023</span></div></div>
+      <div class="col-6 col-md-3"><div class="award-item"><i class="fas fa-star fa-lg mb-1" style="color:var(--maroon);"></i><h6>5-Star Customer Rating</h6><span>Google Reviews</span></div></div>
+      <div class="col-6 col-md-3"><div class="award-item"><i class="fas fa-certificate fa-lg mb-1" style="color:var(--maroon);"></i><h6>BIS Certified</h6><span>Bureau of Sri Lankan Standards</span></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- GALLERY -->
+<section class="section-cream py-5">
+  <div class="container">
+    <!-- Filter Tabs -->
+    <div class="d-flex justify-content-center gap-2 flex-wrap mb-5 fade-in-up">
+      <button class="gallery-tab active" data-gallery="all">All Collections</button>
+      <button class="gallery-tab" data-gallery="bridal">Bridal</button>
+      <button class="gallery-tab" data-gallery="necklace">Necklaces</button>
+      <button class="gallery-tab" data-gallery="earring">Earrings</button>
+      <button class="gallery-tab" data-gallery="ring">Rings</button>
+      <button class="gallery-tab" data-gallery="bangle">Bangles</button>
+      <button class="gallery-tab" data-gallery="diamond">Diamond</button>
+    </div>
+
+    <!-- Masonry Gallery -->
+    <div class="masonry-grid" id="galleryGrid">
+      <div class="masonry-item fade-in-up" data-gallery-cat="bridal">
+        <img src="https://images.unsplash.com/photo-1617038260897-41a1f14a8ca0?w=500&q=80" alt="Bridal Set"/>
+        <div class="masonry-overlay"><i class="fas fa-search-plus"></i><span>Maharani Bridal Set</span><div class="cat-tag">Bridal Collection</div></div>
+      </div>
+      <div class="masonry-item fade-in-up" data-delay="50" data-gallery-cat="necklace">
+        <img src="https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=500&q=80" alt="Necklace"/>
+        <div class="masonry-overlay"><i class="fas fa-search-plus"></i><span>Royal Kundan Haar</span><div class="cat-tag">Necklace</div></div>
+      </div>
+      <div class="masonry-item fade-in-up" data-delay="100" data-gallery-cat="ring">
+        <img src="https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=500&q=80" alt="Ring"/>
+        <div class="masonry-overlay"><i class="fas fa-search-plus"></i><span>Emerald Royale Ring</span><div class="cat-tag">Ring</div></div>
+      </div>
+      <div class="masonry-item fade-in-up" data-delay="150" data-gallery-cat="earring">
+        <img src="https://images.unsplash.com/photo-1603561596112-0a132b757442?w=500&q=80" alt="Earrings"/>
+        <div class="masonry-overlay"><i class="fas fa-search-plus"></i><span>Starlight Jhumka</span><div class="cat-tag">Earrings</div></div>
+      </div>
+      <div class="masonry-item fade-in-up" data-delay="200" data-gallery-cat="bangle">
+        <img src="https://images.unsplash.com/photo-1602173574767-37ac01994b2a?w=500&q=80" alt="Bangles"/>
+        <div class="masonry-overlay"><i class="fas fa-search-plus"></i><span>Antique Kangan Set</span><div class="cat-tag">Bangles</div></div>
+      </div>
+      <div class="masonry-item fade-in-up" data-delay="250" data-gallery-cat="diamond">
+        <img src="https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=500&q=80" alt="Diamond Pendant"/>
+        <div class="masonry-overlay"><i class="fas fa-search-plus"></i><span>Aurora Diamond Pendant</span><div class="cat-tag">Diamond</div></div>
+      </div>
+      <div class="masonry-item fade-in-up" data-delay="100" data-gallery-cat="earring">
+        <img src="https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=500&q=80" alt="Ruby Earrings"/>
+        <div class="masonry-overlay"><i class="fas fa-search-plus"></i><span>Crimson Drop Earrings</span><div class="cat-tag">Earrings</div></div>
+      </div>
+      <div class="masonry-item fade-in-up" data-delay="150" data-gallery-cat="ring">
+        <img src="https://images.unsplash.com/photo-1573408301185-9519f94815b9?w=500&q=80" alt="Diamond Ring"/>
+        <div class="masonry-overlay"><i class="fas fa-search-plus"></i><span>Eternity Promise Ring</span><div class="cat-tag">Ring</div></div>
+      </div>
+      <div class="masonry-item fade-in-up" data-delay="200" data-gallery-cat="necklace">
+        <img src="https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=500&q=80" alt="Gold Chain"/>
+        <div class="masonry-overlay"><i class="fas fa-search-plus"></i><span>Classic Rope Chain</span><div class="cat-tag">Necklace</div></div>
+      </div>
+      <div class="masonry-item fade-in-up" data-delay="50" data-gallery-cat="bridal">
+        <img src="https://images.unsplash.com/photo-1583292650898-7d22cd27ca6f?w=500&q=80" alt="Bridal Jewellery"/>
+        <div class="masonry-overlay"><i class="fas fa-search-plus"></i><span>Rajwada Bridal Set</span><div class="cat-tag">Bridal Collection</div></div>
+      </div>
+      <div class="masonry-item fade-in-up" data-delay="100" data-gallery-cat="diamond">
+        <img src="https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=500&q=80" alt="Diamond Jewellery"/>
+        <div class="masonry-overlay"><i class="fas fa-search-plus"></i><span>Diamond Solitaire</span><div class="cat-tag">Diamond</div></div>
+      </div>
+      <div class="masonry-item fade-in-up" data-delay="150" data-gallery-cat="necklace">
+        <img src="https://images.unsplash.com/photo-1588444650733-d0d3af11a5e4?w=500&q=80" alt="Gemstone Necklace"/>
+        <div class="masonry-overlay"><i class="fas fa-search-plus"></i><span>Sapphire Cascade</span><div class="cat-tag">Necklace</div></div>
+      </div>
+    </div>
+
+    <!-- Load More -->
+    <div class="text-center mt-5 fade-in-up">
+      <button class="btn-maroon" id="loadMoreBtn" onclick="loadMore()"><i class="fas fa-plus me-2"></i>Load More</button>
+    </div>
+  </div>
+</section>
+
+<!-- BEHIND THE SCENES / VIDEOS -->
+<section class="section-white py-5">
+  <div class="container">
+    <div class="section-header fade-in-up">
+      <span class="section-tag">Craftsmanship Stories</span>
+      <h2 class="section-title">The Art of <span>Jewellery Making</span></h2>
+      <div class="section-divider"><div class="line"></div><div class="diamond"></div><div class="line right"></div></div>
+      <p class="section-desc">Witness the exquisite craftsmanship behind each piece — from raw gold to breathtaking jewellery.</p>
+    </div>
+    <div class="row g-4">
+      <div class="col-md-6 fade-in-left">
+        <div class="video-thumb" style="border-radius:16px;border:3px solid rgba(212,160,23,.3);">
+          <img src="https://images.unsplash.com/photo-1617038260897-41a1f14a8ca0?w=700&q=80" alt="Crafting Video" style="height:300px;object-fit:cover;width:100%;border-radius:13px;"/>
+          <div class="play-btn"><div class="play-icon"><i class="fas fa-play ms-1"></i></div></div>
+          <div style="position:absolute;bottom:0;left:0;right:0;background:linear-gradient(to top,rgba(90,0,0,.9),transparent);padding:1.2rem;border-radius:0 0 13px 13px;">
+            <div style="color:var(--gold-light);font-weight:700;font-family:'Playfair Display',serif;">The Making of a Bridal Set</div>
+            <div style="color:rgba(255,255,255,.7);font-size:.78rem;margin-top:2px;"><i class="fas fa-clock me-1"></i>5:42 mins</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 fade-in-right">
+        <div class="video-thumb" style="border-radius:16px;border:3px solid rgba(212,160,23,.3);">
+          <img src="https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=700&q=80" alt="Diamond Setting Video" style="height:300px;object-fit:cover;width:100%;border-radius:13px;"/>
+          <div class="play-btn"><div class="play-icon"><i class="fas fa-play ms-1"></i></div></div>
+          <div style="position:absolute;bottom:0;left:0;right:0;background:linear-gradient(to top,rgba(90,0,0,.9),transparent);padding:1.2rem;border-radius:0 0 13px 13px;">
+            <div style="color:var(--gold-light);font-weight:700;font-family:'Playfair Display',serif;">Diamond Setting: A Closer Look</div>
+            <div style="color:rgba(255,255,255,.7);font-size:.78rem;margin-top:2px;"><i class="fas fa-clock me-1"></i>3:15 mins</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CUSTOMER SHOWCASE -->
+<section class="section-cream py-5">
+  <div class="container">
+    <div class="section-header fade-in-up">
+      <span class="section-tag">Real Customers, Real Moments</span>
+      <h2 class="section-title">Customer <span>Showcase</span></h2>
+      <div class="section-divider"><div class="line"></div><div class="diamond"></div><div class="line right"></div></div>
+      <p class="section-desc">Our jewellery, your precious moments. Tag us @royalgemsin to be featured here.</p>
+    </div>
+    <div class="row g-3">
+      <div class="col-4 col-md-2 fade-in-up" data-delay="0">
+        <div class="masonry-item" style="height:140px;">
+          <img src="https://i.pravatar.cc/200?img=5" alt="Customer 1" style="height:100%;object-fit:cover;"/>
+          <div class="masonry-overlay" style="background:rgba(128,0,0,.6);"><i class="fab fa-instagram" style="font-size:1.3rem;"></i></div>
+        </div>
+      </div>
+      <div class="col-4 col-md-2 fade-in-up" data-delay="60">
+        <div class="masonry-item" style="height:140px;">
+          <img src="https://i.pravatar.cc/200?img=9" alt="Customer 2" style="height:100%;object-fit:cover;"/>
+          <div class="masonry-overlay" style="background:rgba(128,0,0,.6);"><i class="fab fa-instagram" style="font-size:1.3rem;"></i></div>
+        </div>
+      </div>
+      <div class="col-4 col-md-2 fade-in-up" data-delay="120">
+        <div class="masonry-item" style="height:140px;">
+          <img src="https://i.pravatar.cc/200?img=12" alt="Customer 3" style="height:100%;object-fit:cover;"/>
+          <div class="masonry-overlay" style="background:rgba(128,0,0,.6);"><i class="fab fa-instagram" style="font-size:1.3rem;"></i></div>
+        </div>
+      </div>
+      <div class="col-4 col-md-2 fade-in-up" data-delay="180">
+        <div class="masonry-item" style="height:140px;">
+          <img src="https://i.pravatar.cc/200?img=17" alt="Customer 4" style="height:100%;object-fit:cover;"/>
+          <div class="masonry-overlay" style="background:rgba(128,0,0,.6);"><i class="fab fa-instagram" style="font-size:1.3rem;"></i></div>
+        </div>
+      </div>
+      <div class="col-4 col-md-2 fade-in-up" data-delay="240">
+        <div class="masonry-item" style="height:140px;">
+          <img src="https://i.pravatar.cc/200?img=25" alt="Customer 5" style="height:100%;object-fit:cover;"/>
+          <div class="masonry-overlay" style="background:rgba(128,0,0,.6);"><i class="fab fa-instagram" style="font-size:1.3rem;"></i></div>
+        </div>
+      </div>
+      <div class="col-4 col-md-2 fade-in-up" data-delay="300">
+        <div class="masonry-item" style="height:140px;">
+          <img src="https://i.pravatar.cc/200?img=32" alt="Customer 6" style="height:100%;object-fit:cover;"/>
+          <div class="masonry-overlay" style="background:rgba(128,0,0,.6);"><i class="fab fa-instagram" style="font-size:1.3rem;"></i></div>
+        </div>
+      </div>
+    </div>
+    <div class="text-center mt-4 fade-in-up">
+      <a href="#" class="btn-outline-gold"><i class="fab fa-instagram me-2"></i>Follow @royalgemsin</a>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="container">
+    <div class="cta-content">
+      <h2 class="cta-title fade-in-up">Inspired by Our <span>Gallery?</span></h2>
+      <p class="cta-text fade-in-up" data-delay="100">Own your favourite piece or rent it for a special day. Our entire collection is available online.</p>
+      <div class="d-flex gap-3 justify-content-center flex-wrap fade-in-up" data-delay="200">
+        <a href="shop.html" class="btn-gold"><i class="fas fa-gem me-2"></i>Buy Jewellery</a>
+        <a href="rent.html" class="btn-outline-gold"><i class="fas fa-calendar-alt me-2"></i>Rent Jewellery</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer-main">
+  <div class="container">
+    <div class="row g-4">
+      <div class="col-lg-4 col-md-6">
+        <div class="footer-brand">
+          <div class="d-flex align-items-center gap-2 mb-2">
+            <div class="brand-gem" style="width:36px;height:36px;font-size:1.1rem;">💎</div>
+            <span class="footer-brand-name">Siri Kirula</span>
+          </div>
+          <p class="footer-desc">Trusted fine jewellery store since 1998. Offering premium gold, diamond and gemstone jewellery for purchase and rent.</p>
+        </div>
+        <div class="footer-social">
+          <a href="#" class="social-btn"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" class="social-btn"><i class="fab fa-instagram"></i></a>
+          <a href="#" class="social-btn"><i class="fab fa-youtube"></i></a>
+          <a href="#" class="social-btn"><i class="fab fa-whatsapp"></i></a>
+        </div>
+      </div>
+      <div class="col-lg-2 col-md-6 col-6">
+        <div class="footer-heading">Quick Links</div>
+        <a href="index.html" class="footer-link">Home</a>
+        <a href="shop.html" class="footer-link">Buy Jewellery</a>
+        <a href="rent.html" class="footer-link">Rent Jewellery</a>
+        <a href="gallery.html" class="footer-link">Gallery</a>
+        <a href="contact.html" class="footer-link">Contact Us</a>
+      </div>
+      <div class="col-lg-2 col-md-6 col-6">
+        <div class="footer-heading">Collections</div>
+        <a href="shop.html" class="footer-link">Necklaces</a>
+        <a href="shop.html" class="footer-link">Earrings</a>
+        <a href="shop.html" class="footer-link">Rings</a>
+        <a href="shop.html" class="footer-link">Bangles</a>
+        <a href="shop.html" class="footer-link">Bridal Sets</a>
+      </div>
+      <div class="col-lg-4 col-md-6">
+        <div class="footer-heading">Contact Info</div>
+        <div class="d-flex gap-2 mb-2"><i class="fas fa-map-marker-alt mt-1" style="color:var(--gold);"></i><span style="font-size:.85rem;color:rgba(255,255,255,.6);">123, Jewellery Lane, Gold Market, Kiribathgoda</span></div>
+        <div class="d-flex gap-2 mb-2"><i class="fas fa-phone" style="color:var(--gold);"></i><span style="font-size:.85rem;color:rgba(255,255,255,.6);">+91 98765 43210</span></div>
+        <div class="d-flex gap-2"><i class="fas fa-envelope" style="color:var(--gold);"></i><span style="font-size:.85rem;color:rgba(255,255,255,.6);">info@royalgems.in</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom"><span>© 2025 Siri Kirula. All rights reserved.</span></div>
+</footer>
+
+<button id="scrollTop" title="Back to top"><i class="fas fa-chevron-up"></i></button>
+
+<!-- LIGHTBOX MODAL -->
+<div class="modal fade" id="lightboxModal" tabindex="-1">
+  <div class="modal-dialog modal-xl modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="lightboxTitle">Jewellery Preview</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" style="filter:invert(1);"></button>
+      </div>
+      <div class="modal-body">
+        <img id="lightboxImg" src="" alt="" class="img-fluid" style="max-height:72vh;width:100%;object-fit:contain;border-radius:8px;"/>
+      </div>
+      <div class="modal-footer" style="border-top:1px solid rgba(212,160,23,.2);">
+        <a href="shop.html" class="btn-gold" style="font-size:.85rem;padding:10px 22px;border-radius:8px;"><i class="fas fa-shopping-bag me-1"></i>Buy This Piece</a>
+        <a href="rent.html" class="btn-maroon" style="font-size:.85rem;padding:10px 22px;border-radius:8px;"><i class="fas fa-calendar-alt me-1"></i>Rent This Piece</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="js/main2.js"></script>
+<script>
+  // Gallery filter tabs
+  $('.gallery-tab').on('click', function(){
+    $('.gallery-tab').removeClass('active');
+    $(this).addClass('active');
+    var cat = $(this).data('gallery');
+    if(cat === 'all'){
+      $('.masonry-item').fadeIn(300);
+    } else {
+      $('.masonry-item').hide();
+      $('[data-gallery-cat="'+cat+'"]').fadeIn(300);
+    }
+  });
+
+  // Lightbox
+  $('.masonry-item').on('click', function(){
+    var src   = $(this).find('img').attr('src');
+    var title = $(this).find('.masonry-overlay span').text();
+    $('#lightboxImg').attr('src', src).attr('alt', title);
+    $('#lightboxTitle').text(title);
+    $('#lightboxModal').modal('show');
+  });
+
+  // Load more simulation
+  function loadMore(){
+    var btn = $('#loadMoreBtn');
+    btn.html('<i class="fas fa-spinner fa-spin me-2"></i>Loading...').prop('disabled',true);
+    setTimeout(function(){
+      btn.html('<i class="fas fa-check me-2"></i>All items loaded').prop('disabled',true);
+    }, 1500);
+  }
+</script>
+</body>
+</html>

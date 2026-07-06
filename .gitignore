@@ -1,0 +1,27 @@
+# IDE
+.vscode/
+.idea/
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Logs
+*.log
+
+# Temporary files
+tmp/
+temp/
+
+# Composer
+/vendor/
+
+# Environment
+.env
+.env.local
+
+# Node (if used)
+node_modules/
+
+# Cache
+cache/

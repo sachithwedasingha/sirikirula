@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Rent Jewellery – Siri Kirula</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💎</text></svg>"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet"/>
+  <link href="css/style2.css" rel="stylesheet"/>
+  <style>
+    h1,h2,h3,h4,h5,.brand-name,.section-title,.page-hero-title,.product-name {
+      font-family: 'Playfair Display', Georgia, serif !important;
+    }
+    /* Pricing table */
+    .pricing-card {
+      background: var(--white);
+      border: 2px solid rgba(212,160,23,0.2);
+      border-radius: 20px; padding: 2.5rem 2rem;
+      text-align: center; transition: all 0.4s;
+      position: relative; overflow: hidden;
+    }
+    .pricing-card.featured {
+      border-color: var(--gold);
+      background: linear-gradient(135deg, var(--maroon-dark), var(--maroon));
+      transform: scale(1.05);
+      box-shadow: 0 20px 50px var(--shadow);
+    }
+    .pricing-card:not(.featured):hover { transform: translateY(-6px); border-color: var(--gold); box-shadow: 0 12px 35px var(--shadow); }
+    .pricing-badge-top {
+      position: absolute; top: -1px; left: 50%; transform: translateX(-50%);
+      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      color: var(--maroon-dark); font-size: 0.72rem; font-weight: 700;
+      padding: 4px 20px; border-radius: 0 0 12px 12px; letter-spacing: 1px; text-transform: uppercase;
+    }
+    .pricing-name { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .pricing-featured .pricing-name { color: var(--gold-light); }
+    .pricing-price { font-size: 2.5rem; font-weight: 700; font-family: 'Playfair Display', serif; line-height: 1; }
+    .pricing-card:not(.featured) .pricing-price { color: var(--maroon-dark); }
+    .pricing-card.featured .pricing-price { color: var(--gold-light); }
+    .pricing-period { font-size: 0.85rem; opacity: 0.7; margin-bottom: 1.5rem; }
+    .pricing-feature { display: flex; align-items: center; gap: 10px; padding: 8px 0; font-size: 0.88rem; border-bottom: 1px solid rgba(212,160,23,0.1); }
+    .pricing-card:not(.featured) .pricing-feature { color: var(--text-dark); }
+    .pricing-card.featured .pricing-feature { color: rgba(255,255,255,.85); border-color: rgba(255,255,255,.1); }
+    .pricing-feature i.check { color: #2da02d; }
+    .pricing-feature i.cross { color: #c0392b; }
+    .pricing-card.featured .pricing-feature i.check { color: var(--gold-light); }
+    /* Occasion cards */
+    .occasion-card {
+      border-radius: 16px; overflow: hidden; position: relative;
+      height: 200px; cursor: pointer;
+    }
+    .occasion-card img { width:100%;height:100%;object-fit:cover;transition:transform .5s; }
+    .occasion-card:hover img { transform:scale(1.08); }
+    .occasion-overlay {
+      position:absolute;inset:0;
+      background:linear-gradient(to top, rgba(90,0,0,.85) 0%, transparent 60%);
+      display:flex;flex-direction:column;justify-content:flex-end;padding:1.2rem;
+    }
+    .occasion-name { font-size:1rem;font-weight:700;color:var(--gold-light);font-family:'Playfair Display',serif; }
+    .occasion-count { font-size:.76rem;color:rgba(255,215,0,.7); }
+    /* Deposit info card */
+    .deposit-card {
+      background:linear-gradient(135deg, var(--gold-pale), #fffaf0);
+      border:2px solid rgba(212,160,23,0.3);
+      border-radius:16px; padding:1.5rem;
+    }
+    .deposit-icon { width:48px;height:48px;background:linear-gradient(135deg,var(--maroon),var(--maroon-light));border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--gold-light);font-size:1.2rem;flex-shrink:0; }
+    /* Rent form card */
+    .rent-form-card {
+      background:var(--white);
+      border:2px solid rgba(212,160,23,0.25);
+      border-radius:20px;
+      padding:2.5rem;
+      box-shadow:0 8px 30px var(--shadow);
+    }
+    .rent-form-card .form-section-title {
+      font-size:1.4rem;color:var(--maroon-dark);margin-bottom:1.5rem;
+      padding-bottom:12px;border-bottom:2px solid rgba(212,160,23,0.2);
+    }
+    /* How it works timeline */
+    .how-timeline { position:relative; padding-left:60px; }
+    .how-timeline::before { content:'';position:absolute;left:23px;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,var(--gold),var(--maroon)); }
+    .how-step { position:relative;margin-bottom:2.5rem; }
+    .how-step-num {
+      position:absolute;left:-60px;top:0;
+      width:46px;height:46px;
+      background:linear-gradient(135deg,var(--maroon),var(--maroon-light));
+      border:2px solid var(--gold);border-radius:50%;
+      display:flex;align-items:center;justify-content:center;
+      font-weight:700;color:var(--gold-light);font-size:1rem;
+      font-family:'Playfair Display',serif;
+    }
+    .how-step h5 { color:var(--maroon-dark);font-weight:700;margin-bottom:6px; }
+    .how-step p { font-size:.88rem;color:var(--text-muted);line-height:1.6; }
+  </style>
+</head>
+<body>
+
+<!-- PRELOADER -->
+<div id="preloader"><div class="gem-spin"></div><p>Siri Kirula</p></div>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-custom">
+  <div class="container">
+    <a class="navbar-brand p-0" href="index.html">
+      <div class="navbar-brand-box">
+        <img class="brand-gem" src="assets/logo.png">
+        <div class="brand-text">
+          <div class="brand-name">Siri Kirula</div>
+          <div class="brand-tagline">Fine Jewellery Since 1998</div>
+        </div>
+      </div>
+    </a>
+    <button class="navbar-toggler navbar-toggler-custom border-0 bg-transparent" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+      <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navMenu">
+      <ul class="navbar-nav ms-auto align-items-center gap-1">
+        <li class="nav-item"><a class="nav-link-custom" href="index.html">Home</a></li>
+        <li class="nav-item"><a class="nav-link-custom" href="shop.html">Buy Jewellery</a></li>
+        <li class="nav-item"><a class="nav-link-custom active" href="rent.html">Rent Jewellery</a></li>
+        <li class="nav-item"><a class="nav-link-custom" href="gallery.html">Gallery</a></li>
+        <li class="nav-item"><a class="nav-link-custom" href="contact.html">Contact</a></li>
+        <li class="nav-item ms-2"><a class="nav-link-custom nav-cta" href="shop.html"><i class="fas fa-shopping-bag me-1"></i>Shop Now</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="container">
+    <h1 class="page-hero-title fade-in-up">Rent Premium Jewellery</h1>
+    <p class="page-hero-breadcrumb fade-in-up" data-delay="100">
+      <a href="index.html">Home</a> <i class="fas fa-chevron-right mx-2" style="font-size:.7rem;"></i> Rent Jewellery
+    </p>
+    <div class="d-flex justify-content-center gap-4 mt-4 flex-wrap fade-in-up" data-delay="200">
+      <div class="text-center"><div style="font-size:1.8rem;font-weight:700;color:var(--gold-light);font-family:'Playfair Display',serif;">₹299<span style="font-size:1rem;">/day</span></div><div style="font-size:.75rem;color:rgba(255,255,255,.7);letter-spacing:1px;">STARTING FROM</div></div>
+      <div style="width:1px;background:rgba(212,160,23,.3);"></div>
+      <div class="text-center"><div style="font-size:1.8rem;font-weight:700;color:var(--gold-light);font-family:'Playfair Display',serif;">500+</div><div style="font-size:.75rem;color:rgba(255,255,255,.7);letter-spacing:1px;">RENTAL PIECES</div></div>
+      <div style="width:1px;background:rgba(212,160,23,.3);"></div>
+      <div class="text-center"><div style="font-size:1.8rem;font-weight:700;color:var(--gold-light);font-family:'Playfair Display',serif;">100%</div><div style="font-size:.75rem;color:rgba(255,255,255,.7);letter-spacing:1px;">INSURED</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- OCCASIONS -->
+<section class="section-cream py-5">
+  <div class="container">
+    <div class="section-header fade-in-up">
+      <span class="section-tag">Perfect For Every Event</span>
+      <h2 class="section-title">Rent by <span>Occasion</span></h2>
+      <div class="section-divider"><div class="line"></div><div class="diamond"></div><div class="line right"></div></div>
+    </div>
+    <div class="row g-3">
+      <div class="col-md-4 col-6 fade-in-up" data-delay="0">
+        <div class="occasion-card">
+          <img src="https://images.unsplash.com/photo-1617038260897-41a1f14a8ca0?w=500&q=80" alt="Wedding"/>
+          <div class="occasion-overlay"><div class="occasion-name">Weddings</div><div class="occasion-count">180+ pieces</div></div>
+        </div>
+      </div>
+      <div class="col-md-4 col-6 fade-in-up" data-delay="80">
+        <div class="occasion-card">
+          <img src="https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=500&q=80" alt="Festivals"/>
+          <div class="occasion-overlay"><div class="occasion-name">Festivals</div><div class="occasion-count">120+ pieces</div></div>
+        </div>
+      </div>
+      <div class="col-md-4 col-6 fade-in-up" data-delay="160">
+        <div class="occasion-card">
+          <img src="https://images.unsplash.com/photo-1603561596112-0a132b757442?w=500&q=80" alt="Engagement"/>
+          <div class="occasion-overlay"><div class="occasion-name">Engagements</div><div class="occasion-count">80+ pieces</div></div>
+        </div>
+      </div>
+      <div class="col-md-4 col-6 fade-in-up" data-delay="240">
+        <div class="occasion-card">
+          <img src="https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=500&q=80" alt="Party"/>
+          <div class="occasion-overlay"><div class="occasion-name">Parties</div><div class="occasion-count">95+ pieces</div></div>
+        </div>
+      </div>
+      <div class="col-md-4 col-6 fade-in-up" data-delay="320">
+        <div class="occasion-card">
+          <img src="https://images.unsplash.com/photo-1602173574767-37ac01994b2a?w=500&q=80" alt="Photoshoot"/>
+          <div class="occasion-overlay"><div class="occasion-name">Photoshoots</div><div class="occasion-count">60+ pieces</div></div>
+        </div>
+      </div>
+      <div class="col-md-4 col-6 fade-in-up" data-delay="400">
+        <div class="occasion-card">
+          <img src="https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=500&q=80" alt="Corporate"/>
+          <div class="occasion-overlay"><div class="occasion-name">Corporate Events</div><div class="occasion-count">40+ pieces</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RENTAL PRODUCTS -->
+<section class="section-white py-5">
+  <div class="container">
+    <div class="section-header fade-in-up">
+      <span class="section-tag">Available to Rent</span>
+      <h2 class="section-title">Popular <span>Rental</span> Pieces</h2>
+      <div class="section-divider"><div class="line"></div><div class="diamond"></div><div class="line right"></div></div>
+    </div>
+    <div class="filter-bar d-flex gap-2 flex-wrap mb-4 fade-in-up">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="necklace">Necklaces</button>
+      <button class="filter-btn" data-filter="earring">Earrings</button>
+      <button class="filter-btn" data-filter="ring">Rings</button>
+      <button class="filter-btn" data-filter="bangle">Bangles</button>
+      <button class="filter-btn" data-filter="bridal">Bridal Sets</button>
+    </div>
+    <div class="row g-4">
+      <div class="col-lg-3 col-md-6 product-card-wrap fade-in-up" data-category="bridal">
+        <div class="product-card">
+          <div class="product-img-wrap">
+            <img src="https://images.unsplash.com/photo-1617038260897-41a1f14a8ca0?w=500&q=80" alt="Bridal Set"/>
+            <div class="product-badge rent">Rent</div>
+            <div class="product-overlay">
+              <button class="overlay-btn btn-quickview"><i class="fas fa-eye"></i></button>
+              <button class="overlay-btn btn-wishlist"><i class="far fa-heart"></i></button>
+            </div>
+          </div>
+          <div class="product-body">
+            <div class="product-category">Bridal Set • 22K Gold</div>
+            <div class="product-name">Maharani Bridal Set</div>
+            <div class="product-desc">Complete bridal set with necklace, earrings, maang tikka & bangles.</div>
+            <div class="product-footer">
+              <div><div class="rent-price" style="font-size:1.1rem;"><i class="fas fa-calendar-alt me-1"></i>₹1,499/day</div><div style="font-size:.75rem;color:var(--text-muted);">Security deposit: ₹5,000</div></div>
+            </div>
+            <a href="#rentForm" class="btn-gold d-block text-center mt-2" style="font-size:.82rem;padding:10px;border-radius:8px;">Book Now</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6 product-card-wrap fade-in-up" data-delay="80" data-category="necklace">
+        <div class="product-card">
+          <div class="product-img-wrap">
+            <img src="https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=500&q=80" alt="Necklace"/>
+            <div class="product-badge rent">Rent</div>
+            <div class="product-overlay">
+              <button class="overlay-btn btn-quickview"><i class="fas fa-eye"></i></button>
+              <button class="overlay-btn btn-wishlist"><i class="far fa-heart"></i></button>
+            </div>
+          </div>
+          <div class="product-body">
+            <div class="product-category">Gold Necklace • 22K</div>
+            <div class="product-name">Royal Kundan Haar</div>
+            <div class="product-desc">Traditional kundan necklace with pearl drops for festive occasions.</div>
+            <div class="product-footer">
+              <div><div class="rent-price" style="font-size:1.1rem;"><i class="fas fa-calendar-alt me-1"></i>₹699/day</div><div style="font-size:.75rem;color:var(--text-muted);">Security deposit: ₹2,000</div></div>
+            </div>
+            <a href="#rentForm" class="btn-gold d-block text-center mt-2" style="font-size:.82rem;padding:10px;border-radius:8px;">Book Now</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6 product-card-wrap fade-in-up" data-delay="160" data-category="earring">
+        <div class="product-card">
+          <div class="product-img-wrap">
+            <img src="https://images.unsplash.com/photo-1603561596112-0a132b757442?w=500&q=80" alt="Earrings"/>
+            <div class="product-badge rent">Rent</div>
+            <div class="product-overlay">
+              <button class="overlay-btn btn-quickview"><i class="fas fa-eye"></i></button>
+              <button class="overlay-btn btn-wishlist"><i class="far fa-heart"></i></button>
+            </div>
+          </div>
+          <div class="product-body">
+            <div class="product-category">Diamond Earrings • 18K</div>
+            <div class="product-name">Starlight Jhumka</div>
+            <div class="product-desc">Brilliant cut diamond earrings, IGI certified, perfect for parties.</div>
+            <div class="product-footer">
+              <div><div class="rent-price" style="font-size:1.1rem;"><i class="fas fa-calendar-alt me-1"></i>₹499/day</div><div style="font-size:.75rem;color:var(--text-muted);">Security deposit: ₹1,500</div></div>
+            </div>
+            <a href="#rentForm" class="btn-gold d-block text-center mt-2" style="font-size:.82rem;padding:10px;border-radius:8px;">Book Now</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6 product-card-wrap fade-in-up" data-delay="240" data-category="ring">
+        <div class="product-card">
+          <div class="product-img-wrap">
+            <img src="https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=500&q=80" alt="Ring"/>
+            <div class="product-badge rent">Rent</div>
+            <div class="product-overlay">
+              <button class="overlay-btn btn-quickview"><i class="fas fa-eye"></i></button>
+              <button class="overlay-btn btn-wishlist"><i class="far fa-heart"></i></button>
+            </div>
+          </div>
+          <div class="product-body">
+            <div class="product-category">Gemstone Ring • 22K</div>
+            <div class="product-name">Emerald Royale Ring</div>
+            <div class="product-desc">Natural emerald solitaire ring — ideal for engagement functions.</div>
+            <div class="product-footer">
+              <div><div class="rent-price" style="font-size:1.1rem;"><i class="fas fa-calendar-alt me-1"></i>₹599/day</div><div style="font-size:.75rem;color:var(--text-muted);">Security deposit: ₹1,800</div></div>
+            </div>
+            <a href="#rentForm" class="btn-gold d-block text-center mt-2" style="font-size:.82rem;padding:10px;border-radius:8px;">Book Now</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS + RENT FORM -->
+<section class="section-cream py-5">
+  <div class="container">
+    <div class="row g-5">
+      <!-- How it works -->
+      <div class="col-lg-5 fade-in-left">
+        <span class="section-tag">Simple Process</span>
+        <h2 class="section-title mt-2">How Jewellery<br><span>Rental Works</span></h2>
+        <div class="section-divider justify-content-start mt-3 mb-4"><div class="line"></div><div class="diamond"></div></div>
+        <div class="how-timeline mt-4">
+          <div class="how-step">
+            <div class="how-step-num">1</div>
+            <h5>Browse & Select</h5>
+            <p>Browse our 500+ rental catalogue online or visit our showroom and choose the pieces you love.</p>
+          </div>
+          <div class="how-step">
+            <div class="how-step-num">2</div>
+            <h5>Book Your Dates</h5>
+            <p>Fill the rental inquiry form, select your event dates and rental duration. Minimum 1 day.</p>
+          </div>
+          <div class="how-step">
+            <div class="how-step-num">3</div>
+            <h5>Pay & Confirm</h5>
+            <p>Pay the rental amount + refundable security deposit online or in-store to confirm your booking.</p>
+          </div>
+          <div class="how-step">
+            <div class="how-step-num">4</div>
+            <h5>Home Delivery</h5>
+            <p>We deliver insured jewellery to your doorstep on your event day, beautifully packaged.</p>
+          </div>
+          <div class="how-step" style="margin-bottom:0;">
+            <div class="how-step-num">5</div>
+            <h5>Return & Refund</h5>
+            <p>We collect the jewellery after your event. Security deposit refunded within 24 hours.</p>
+          </div>
+        </div>
+
+        <!-- Deposit info -->
+        <div class="deposit-card mt-4">
+          <h6 style="color:var(--maroon-dark);font-weight:700;margin-bottom:1rem;"><i class="fas fa-shield-alt me-2" style="color:var(--gold);"></i>Rental Policy Highlights</h6>
+          <div class="d-flex gap-3 mb-2 align-items-start">
+            <div class="deposit-icon"><i class="fas fa-lock"></i></div>
+            <div><strong style="font-size:.88rem;color:var(--maroon);">Refundable Deposit</strong><br><span style="font-size:.82rem;color:var(--text-muted);">100% refunded within 24 hours of return, condition dependent.</span></div>
+          </div>
+          <div class="d-flex gap-3 mb-2 align-items-start">
+            <div class="deposit-icon"><i class="fas fa-file-alt"></i></div>
+            <div><strong style="font-size:.88rem;color:var(--maroon);">ID Required</strong><br><span style="font-size:.82rem;color:var(--text-muted);">Aadhar/PAN/Passport required for rental booking verification.</span></div>
+          </div>
+          <div class="d-flex gap-3 align-items-start">
+            <div class="deposit-icon"><i class="fas fa-car"></i></div>
+            <div><strong style="font-size:.88rem;color:var(--maroon);">Free Delivery</strong><br><span style="font-size:.82rem;color:var(--text-muted);">Free home delivery and pickup for all rental orders.</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Rent Form -->
+      <div class="col-lg-7 fade-in-right">
+        <div class="rent-form-card" id="rentForm">
+          <h3 class="rent-form-card form-section-title"><i class="fas fa-calendar-check me-2" style="color:var(--gold);"></i>Book Rental Jewellery</h3>
+          <form id="rentFormEl" onsubmit="submitRent(event)">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label-custom">Full Name *</label>
+                <input type="text" class="form-control-custom w-100" placeholder="Your Full Name" required/>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label-custom">Mobile Number *</label>
+                <input type="tel" class="form-control-custom w-100" placeholder="+91 98765 43210" required/>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label-custom">Email Address</label>
+                <input type="email" class="form-control-custom w-100" placeholder="your@email.com"/>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label-custom">City / Location *</label>
+                <input type="text" class="form-control-custom w-100" placeholder="Kiribathgoda, Delhi, etc." required/>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label-custom">Rental Start Date *</label>
+                <input type="date" class="form-control-custom w-100" required/>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label-custom">Rental End Date *</label>
+                <input type="date" class="form-control-custom w-100" required/>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label-custom">Occasion *</label>
+                <select class="form-control-custom w-100" required style="cursor:pointer;">
+                  <option value="">Select Occasion</option>
+                  <option>Wedding</option>
+                  <option>Engagement</option>
+                  <option>Festival / Puja</option>
+                  <option>Party / Reception</option>
+                  <option>Photoshoot</option>
+                  <option>Corporate Event</option>
+                  <option>Other</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label-custom">Jewellery Type *</label>
+                <select class="form-control-custom w-100" required style="cursor:pointer;">
+                  <option value="">Select Type</option>
+                  <option>Bridal Set (Full)</option>
+                  <option>Necklace Only</option>
+                  <option>Earrings Only</option>
+                  <option>Ring Only</option>
+                  <option>Bangles / Kangan</option>
+                  <option>Custom Combination</option>
+                </select>
+              </div>
+              <div class="col-12">
+                <label class="form-label-custom">Budget Range</label>
+                <div class="d-flex gap-2 flex-wrap mt-1">
+                  <label style="cursor:pointer;"><input type="radio" name="budget" class="me-1" style="accent-color:var(--maroon);"/> Under ₹1,000</label>
+                  <label style="cursor:pointer;"><input type="radio" name="budget" class="me-1" style="accent-color:var(--maroon);"/> ₹1,000–₹3,000</label>
+                  <label style="cursor:pointer;"><input type="radio" name="budget" class="me-1" style="accent-color:var(--maroon);"/> ₹3,000–₹7,000</label>
+                  <label style="cursor:pointer;"><input type="radio" name="budget" class="me-1" style="accent-color:var(--maroon);"/> ₹7,000+</label>
+                </div>
+              </div>
+              <div class="col-12">
+                <label class="form-label-custom">Special Requirements</label>
+                <textarea class="form-control-custom w-100" rows="3" placeholder="Describe any specific designs, metals, or gemstones you prefer..."></textarea>
+              </div>
+              <div class="col-12">
+                <div class="d-flex align-items-start gap-2" style="background:var(--gold-pale);padding:12px;border-radius:10px;border:1px solid rgba(212,160,23,.3);">
+                  <i class="fas fa-info-circle mt-1" style="color:var(--gold);"></i>
+                  <p style="font-size:.82rem;color:var(--text-muted);margin:0;line-height:1.5;">Our team will call you within 2 hours to confirm availability and discuss rental details. Security deposit is collected at time of delivery.</p>
+                </div>
+              </div>
+              <div class="col-12">
+                <button type="submit" class="btn-gold w-100" style="font-size:1rem;padding:14px;border-radius:10px;"><i class="fas fa-calendar-check me-2"></i>Submit Rental Inquiry</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING PLANS -->
+<section class="section-white py-5">
+  <div class="container">
+    <div class="section-header fade-in-up">
+      <span class="section-tag">Rental Plans</span>
+      <h2 class="section-title">Choose Your <span>Rental Plan</span></h2>
+      <div class="section-divider"><div class="line"></div><div class="diamond"></div><div class="line right"></div></div>
+    </div>
+    <div class="row g-4 align-items-center">
+      <div class="col-md-4 fade-in-up" data-delay="0">
+        <div class="pricing-card">
+          <div class="pricing-name" style="color:var(--maroon-dark);">Silver Plan</div>
+          <div class="pricing-price">₹299</div>
+          <div class="pricing-period">per day</div>
+          <div class="pricing-feature"><i class="fas fa-check check"></i> Single jewellery piece</div>
+          <div class="pricing-feature"><i class="fas fa-check check"></i> Up to 1 day rental</div>
+          <div class="pricing-feature"><i class="fas fa-check check"></i> Home delivery included</div>
+          <div class="pricing-feature"><i class="fas fa-times cross"></i> Insurance coverage</div>
+          <div class="pricing-feature"><i class="fas fa-times cross"></i> Styling consultation</div>
+          <div class="pricing-feature"><i class="fas fa-times cross"></i> Priority support</div>
+          <a href="#rentForm" class="btn-maroon d-block text-center mt-4" style="border-radius:10px;padding:12px;">Choose Plan</a>
+        </div>
+      </div>
+      <div class="col-md-4 fade-in-up" data-delay="150">
+        <div class="pricing-card featured pricing-featured">
+          <div class="pricing-badge-top">Most Popular</div>
+          <div class="pricing-name">Gold Plan</div>
+          <div class="pricing-price">₹799</div>
+          <div class="pricing-period">per day</div>
+          <div class="pricing-feature"><i class="fas fa-check check"></i> 3 jewellery pieces</div>
+          <div class="pricing-feature"><i class="fas fa-check check"></i> Up to 3 days rental</div>
+          <div class="pricing-feature"><i class="fas fa-check check"></i> Home delivery included</div>
+          <div class="pricing-feature"><i class="fas fa-check check"></i> Full insurance coverage</div>
+          <div class="pricing-feature"><i class="fas fa-check check"></i> Styling consultation</div>
+          <div class="pricing-feature"><i class="fas fa-times cross" style="color:rgba(255,255,255,.4);"></i> Priority support</div>
+          <a href="#rentForm" class="btn-gold d-block text-center mt-4" style="border-radius:10px;padding:12px;">Choose Plan</a>
+        </div>
+      </div>
+      <div class="col-md-4 fade-in-up" data-delay="300">
+        <div class="pricing-card">
+          <div class="pricing-name" style="color:var(--maroon-dark);">Platinum Plan</div>
+          <div class="pricing-price">₹1,499</div>
+          <div class="pricing-period">per day</div>
+          <div class="pricing-feature"><i class="fas fa-check check"></i> Full bridal collection</div>
+          <div class="pricing-feature"><i class="fas fa-check check"></i> Up to 7 days rental</div>
+          <div class="pricing-feature"><i class="fas fa-check check"></i> Home delivery included</div>
+          <div class="pricing-feature"><i class="fas fa-check check"></i> Full insurance coverage</div>
+          <div class="pricing-feature"><i class="fas fa-check check"></i> Styling consultation</div>
+          <div class="pricing-feature"><i class="fas fa-check check"></i> 24/7 priority support</div>
+          <a href="#rentForm" class="btn-maroon d-block text-center mt-4" style="border-radius:10px;padding:12px;">Choose Plan</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer-main">
+  <div class="container">
+    <div class="row g-4">
+      <div class="col-lg-4 col-md-6">
+        <div class="footer-brand">
+          <div class="d-flex align-items-center gap-2 mb-2">
+            <div class="brand-gem" style="width:36px;height:36px;font-size:1.1rem;">💎</div>
+            <span class="footer-brand-name">Siri Kirula</span>
+          </div>
+          <p class="footer-desc">Trusted fine jewellery store since 1998. Offering premium gold, diamond and gemstone jewellery for purchase and rent.</p>
+        </div>
+        <div class="footer-social">
+          <a href="#" class="social-btn"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" class="social-btn"><i class="fab fa-instagram"></i></a>
+          <a href="#" class="social-btn"><i class="fab fa-youtube"></i></a>
+          <a href="#" class="social-btn"><i class="fab fa-whatsapp"></i></a>
+        </div>
+      </div>
+      <div class="col-lg-2 col-md-6 col-6">
+        <div class="footer-heading">Quick Links</div>
+        <a href="index.html" class="footer-link">Home</a>
+        <a href="shop.html" class="footer-link">Buy Jewellery</a>
+        <a href="rent.html" class="footer-link">Rent Jewellery</a>
+        <a href="gallery.html" class="footer-link">Gallery</a>
+        <a href="contact.html" class="footer-link">Contact Us</a>
+      </div>
+      <div class="col-lg-2 col-md-6 col-6">
+        <div class="footer-heading">Rental</div>
+        <a href="#" class="footer-link">Bridal Rental</a>
+        <a href="#" class="footer-link">Festival Rental</a>
+        <a href="#" class="footer-link">Party Rental</a>
+        <a href="#" class="footer-link">Photoshoot Rental</a>
+        <a href="#" class="footer-link">Pricing Plans</a>
+      </div>
+      <div class="col-lg-4 col-md-6">
+        <div class="footer-heading">Contact Info</div>
+        <div class="d-flex gap-2 mb-2"><i class="fas fa-map-marker-alt mt-1" style="color:var(--gold);"></i><span style="font-size:.85rem;color:rgba(255,255,255,.6);">123, Jewellery Lane, Gold Market, Kiribathgoda</span></div>
+        <div class="d-flex gap-2 mb-2"><i class="fas fa-phone" style="color:var(--gold);"></i><span style="font-size:.85rem;color:rgba(255,255,255,.6);">+91 98765 43210</span></div>
+        <div class="d-flex gap-2"><i class="fas fa-envelope" style="color:var(--gold);"></i><span style="font-size:.85rem;color:rgba(255,255,255,.6);">rentals@royalgems.in</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom"><span>© 2025 Siri Kirula. All rights reserved.</span></div>
+</footer>
+
+<button id="scrollTop" title="Back to top"><i class="fas fa-chevron-up"></i></button>
+
+<!-- Quick View Modal -->
+<div class="modal fade modal-product" id="quickViewModal" tabindex="-1">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="qvModalTitle">Jewellery Details</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body p-0">
+        <div class="row g-0">
+          <div class="col-md-5"><img id="qvModalImg" src="" alt="" class="img-fluid w-100" style="max-height:320px;object-fit:cover;"/></div>
+          <div class="col-md-7 p-4">
+            <div class="product-category" id="qvModalCat"></div>
+            <h4 class="product-name mt-1" id="qvModalName"></h4>
+            <p id="qvModalDesc" style="font-size:.9rem;color:var(--text-muted);line-height:1.7;" class="mt-2"></p>
+            <div class="price mt-3" id="qvModalPrice"></div>
+            <a href="#rentForm" class="btn-gold d-block text-center mt-3" data-bs-dismiss="modal"><i class="fas fa-calendar-check me-2"></i>Book This Piece</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="js/main2.js"></script>
+<script>
+  function submitRent(e) {
+    e.preventDefault();
+    var btn = $(e.target).find('[type=submit]');
+    btn.html('<i class="fas fa-spinner fa-spin me-2"></i>Submitting...').prop('disabled', true);
+    setTimeout(function() {
+      btn.html('<i class="fas fa-check me-2"></i>Inquiry Sent!').css('background','linear-gradient(135deg,#1a7a1a,#2da02d)');
+      setTimeout(function() {
+        btn.html('<i class="fas fa-calendar-check me-2"></i>Submit Rental Inquiry').css('background','').prop('disabled', false);
+        $(e.target)[0].reset();
+      }, 3000);
+    }, 1800);
+  }
+</script>
+</body>
+</html>
